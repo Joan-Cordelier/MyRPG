@@ -27,6 +27,7 @@ jobs:
                     exit 1
                 else
                     echo "Good repository"
+                fi
 
     check_coding_style:
         runs-on: ubuntu-latest
