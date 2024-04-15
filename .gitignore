@@ -1,0 +1,12 @@
+myrpg
+a.out
+*.o
+*~
+*.gc*
+*.log
+test
+.vscode
+*vgcore*
+*.gcno
+*.gcda
+uni_tests
