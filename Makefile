@@ -1,53 +1,44 @@
 ##
-## EPITECH PROJECT, 2023
-## Makefile
+## EPITECH PROJECT, 2024
+## MAKEFILE
 ## File description:
-## Makefile
+## MAKEFILE
 ##
 
-SRC	 =	./src/put/my_putstr.c	\
-		./src/main.c			\
+SRC :=	src/main.c	\
+		src/window.c \
+		src/csfml.c \
 
-TESTSRC	=	./src/put/my_putstr.c			\
-			./tests/put/test_my_putstr.c	\
+OBJ := ${SRC:.c=.o}
 
+NAME := my_rpg
 
-OBJ	=	$(SRC:.c=.o)
+CFLAGS := -g3 -Wall -Wextra -Iinclude
 
-CFLAGS  =       -Wall -Wextra -I ./include/ -g3
+CSFML := -lcsfml-graphics -lcsfml-audio
 
-HEADER	=	my.h
+CSFML2 := -lcsfml-window -lcsfml-system -lcsfml-network
 
-NAME	=	myrpg
+all: $(NAME)
 
-TEST	=	uni_tests
-
-all:	$(NAME)
-
-$(NAME):	$(OBJ)
-	$(CC) -o $(NAME) $(OBJ) -g3
+$(NAME):	${OBJ}
+	$(CC) -o $(NAME) ${OBJ} ${CSFML} ${CSFML2} -O2
 
 clean:
-	rm -f $(OBJ)
-
-fclean:	clean
 	rm -f $(NAME)
-	rm -f $(TEST)
 	rm -f *~
-	rm -f *.gc*
-	rm -f *vgcore*
-	rm -f *.log
-	rm -f *.gcno
+	rm -f vgcore*
+	rm -f coding-style-reports.log*
 	rm -f *.gcda
+	rm -f *.gcno
+	rm -f ${OBJ}
+	rm -f ${TESTNAME}
+	rm -f ${TESTOBJ}
 
-re:	fclean all
 
-$(TEST):	fclean
-	$(CC) -o $(TEST) $(TESTSRC) --coverage -lcriterion $(CFLAGS)
+fclean: clean
+	rm -f $(NAME)
 
-tests_run:	$(TEST)
-	./$(TEST)
-	gcovr --exclude tests/
-	gcovr --exclude tests/ --branches
+re: fclean clean all
 
-.PHONY:	all $(NAME) clean fclean re $(TEST) tests_run
+.PHONY: all clean fclean re
