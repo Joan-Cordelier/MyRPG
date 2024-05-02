@@ -93,6 +93,16 @@ static sfRectangleShape *init_tool_bar(window_t *window)
     return tools_bar;
 } */
 
+sfVector2i mouse(sfRenderWindow *window)
+{
+    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
+    sfVector2f final;
+
+    final = sfRenderWindow_mapPixelToCoords(window, mouse_pos,
+        sfRenderWindow_getView(window));
+    return (sfVector2i){final.x, final.y};
+}
+
 static sfSprite *fond(char *file, float x, float y)
 {
     sfTexture *texture = sfTexture_createFromFile(file, NULL);
@@ -147,45 +157,43 @@ hero_t *hero(char *file, int x, int y)
 
 void menu_prcp(window_t *window, char *file, sfEvent event)
 {
-    /* canva_t *board = init_canva(window->window, file);
-    pencil_t *pencil = init_pencil();
-    sfRectangleShape *tools_bar = init_tool_bar(window);
-    option_t *op = all_button();
-    sfClock *clock = sfClock_create();
-    sfText *text_size = init_text_size(); */
     sfSprite *back = fond("sprite/map.jpg", 3, 3);
-    //hero_t *plyr = hero("sprite/hero_rpg/hero_rpg.png", 127, 93);
     hero_t *plyr = hero("sprite/hero_rpg/hero.png", 150, 150);
     sfSprite *sword = fond("sprite/arme/epee-4.png", 0.8, 0.8);
     sfClock *anim = sfClock_create();
     sfEvent test;
     sfEvent dash;
+    sfVector2f test2;
+    sfVector2f scale1 = {-2, 2};
+    sfVector2f scale2 = {2, 2};
+    sfVector2i button_positions;
     sfSprite_setOrigin(back, (sfVector2f){75, 50});
     sfSprite_setOrigin(plyr->sprite, (sfVector2f){75, 50});
     sfSprite_setOrigin(sword, (sfVector2f){-1080, -540});
-    //sfSprite_rotate(sword, 90.0);
     int x = 75;
     int y = 50;
 
     while (sfRenderWindow_isOpen(window->window)) {
         sfRenderWindow_pollEvent(window->window, &event);
-        //printf("x = %d && y = %d\n", x, y);
         if (move_player(&x, &y, event, 15) != 0) {
             sfSprite_setOrigin(back, (sfVector2f){x, y});
             dash = event;
             event = test;
         }
         if (sfKeyboard_isKeyPressed(sfKeyA)) {
-            printf("2\n");
             move_player(&x, &y, dash, 100);
             sfSprite_setOrigin(back, (sfVector2f){x, y});
             dash = event;
             event = test;
         }
+        button_positions = mouse(window->window);
+        if (button_positions.x > 940)
+            sfSprite_setScale(plyr->sprite, scale1);
+        else
+            sfSprite_setScale(plyr->sprite, scale2);
         if (event.type == sfEvtClosed && sfKeyQ != event.key.code &&
             sfKeyZ != event.key.code && sfKeyS != event.key.code &&
             sfKeyD != event.key.code && sfKeyA != event.key.code) {
-            printf("okok\n");
             sfRenderWindow_close(window->window);
             break;
         }
@@ -195,15 +203,6 @@ void menu_prcp(window_t *window, char *file, sfEvent event)
         sfRenderWindow_drawSprite(window->window, sword, NULL);
         move_anim(anim, plyr);
         sfRenderWindow_display(window->window);
-        /* if (sfClock_getElapsedTime(clock).microseconds * 240 / 1000000 > 1) {
-            closer(&event, &window, &pencil);
-            //pencil = get_pos(pencil, window->window);
-            //draw_on_board(pencil, board, window, text_size);
-            display_board(window, board, tools_bar, text_size);
-            display_rgb_text(window, pencil);
-            display_buttons(window, pencil, &op, board);
-            sfClock_restart(clock);
-        } */
     }
     sfSprite_destroy(back);
     sfSprite_destroy(sword);
