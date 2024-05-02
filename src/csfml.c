@@ -93,11 +93,11 @@ static sfRectangleShape *init_tool_bar(window_t *window)
     return tools_bar;
 } */
 
-static sfSprite *fond(char *file)
+static sfSprite *fond(char *file, float x, float y)
 {
     sfTexture *texture = sfTexture_createFromFile(file, NULL);
     sfSprite *sprite = sfSprite_create();
-    sfVector2f scale = {3, 3};
+    sfVector2f scale = {x, y};
  
     sfSprite_setTexture(sprite, texture, sfTrue);
     sfSprite_setScale(sprite, scale);
@@ -107,9 +107,9 @@ static sfSprite *fond(char *file)
 void move_rect(sfIntRect *rect, int offset, int max)
 {
     for (int n = 0; n <= 2; n++) {
-       rect->left += offset;
+        rect->left += offset;
         if (rect->left >= max)
-           rect->left = 0;
+            rect->left = 0;
     }
 }
 
@@ -117,9 +117,9 @@ static void move_anim(sfClock *clock, hero_t *cible)
 {
    sfTime clock_espl;
    clock_espl = sfClock_getElapsedTime(clock);
-   if (clock_espl.microseconds > 100000) {
+   if (clock_espl.microseconds > 300000) {
        sfSprite_setTextureRect(cible->sprite, cible->rect);
-       move_rect(&cible->rect, 127, 254);
+       move_rect(&cible->rect, 140, 280);
        sfClock_restart(clock);
    }
 }
@@ -153,22 +153,47 @@ void menu_prcp(window_t *window, char *file, sfEvent event)
     option_t *op = all_button();
     sfClock *clock = sfClock_create();
     sfText *text_size = init_text_size(); */
-    sfSprite *back = fond("sprite/map.jpg");
+    sfSprite *back = fond("sprite/map.jpg", 3, 3);
     //hero_t *plyr = hero("sprite/hero_rpg/hero_rpg.png", 127, 93);
-    hero_t *plyr = hero("sprite/hero_rpg/hero_rpg.png", 50, 50);
-    hero_t *sword = hero("sprite/arme/epee-4.png", 200, 200);
+    hero_t *plyr = hero("sprite/hero_rpg/hero.png", 150, 150);
+    sfSprite *sword = fond("sprite/arme/epee-4.png", 0.8, 0.8);
     sfClock *anim = sfClock_create();
+    sfEvent test;
+    sfEvent dash;
+    sfSprite_setOrigin(back, (sfVector2f){75, 50});
     sfSprite_setOrigin(plyr->sprite, (sfVector2f){75, 50});
+    sfSprite_setOrigin(sword, (sfVector2f){-1080, -540});
+    //sfSprite_rotate(sword, 90.0);
+    int x = 75;
+    int y = 50;
 
     while (sfRenderWindow_isOpen(window->window)) {
         sfRenderWindow_pollEvent(window->window, &event);
-        if (event.type == sfEvtClosed)
+        //printf("x = %d && y = %d\n", x, y);
+        if (move_player(&x, &y, event, 15) != 0) {
+            sfSprite_setOrigin(back, (sfVector2f){x, y});
+            dash = event;
+            event = test;
+        }
+        if (sfKeyboard_isKeyPressed(sfKeyA)) {
+            printf("2\n");
+            move_player(&x, &y, dash, 100);
+            sfSprite_setOrigin(back, (sfVector2f){x, y});
+            dash = event;
+            event = test;
+        }
+        if (event.type == sfEvtClosed && sfKeyQ != event.key.code &&
+            sfKeyZ != event.key.code && sfKeyS != event.key.code &&
+            sfKeyD != event.key.code && sfKeyA != event.key.code) {
+            printf("okok\n");
             sfRenderWindow_close(window->window);
+            break;
+        }
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, back, NULL);
         sfRenderWindow_drawSprite(window->window, plyr->sprite, NULL);
-        sfRenderWindow_drawSprite(window->window, sword->sprite, NULL);
-        //move_anim(anim, plyr);
+        sfRenderWindow_drawSprite(window->window, sword, NULL);
+        move_anim(anim, plyr);
         sfRenderWindow_display(window->window);
         /* if (sfClock_getElapsedTime(clock).microseconds * 240 / 1000000 > 1) {
             closer(&event, &window, &pencil);
@@ -180,6 +205,9 @@ void menu_prcp(window_t *window, char *file, sfEvent event)
             sfClock_restart(clock);
         } */
     }
-    // destroy_func(op, board, tools_bar, clock);
-    // destroy_func2(pencil, text_size);
+    sfSprite_destroy(back);
+    sfSprite_destroy(sword);
+    sfSprite_destroy(plyr->sprite);
+    sfClock_destroy(anim);
+    sfRenderWindow_destroy(window->window);
 }

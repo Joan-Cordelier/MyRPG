@@ -10,6 +10,7 @@
     #include "lib.h"
     #include "struct.h"
     #include <string.h>
+int move_player(int *x, int *y, sfEvent event, int speed);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
 int my_strncmp(char const *s1, char const *s2, int n);
