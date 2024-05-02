@@ -174,23 +174,23 @@ void menu_prcp(window_t *window, char *file, sfEvent event)
     int y = 50;
 
     while (sfRenderWindow_isOpen(window->window)) {
-        sfRenderWindow_pollEvent(window->window, &event);
-        if (move_player(&x, &y, event, 15) != 0) {
-            sfSprite_setOrigin(back, (sfVector2f){x, y});
-            dash = event;
-            event = test;
-        }
-        if (sfKeyboard_isKeyPressed(sfKeyA)) {
-            move_player(&x, &y, dash, 100);
-            sfSprite_setOrigin(back, (sfVector2f){x, y});
-            dash = event;
-            event = test;
-        }
         button_positions = mouse(window->window);
         if (button_positions.x > 940)
             sfSprite_setScale(plyr->sprite, scale1);
         else
             sfSprite_setScale(plyr->sprite, scale2);
+        sfRenderWindow_pollEvent(window->window, &event);
+        if (move_player(&x, &y, 5) != 0) {
+            sfSprite_setOrigin(back, (sfVector2f){x, y});
+            dash = event;
+            event = test;
+        }
+        if (sfKeyboard_isKeyPressed(sfKeyA)) {
+            move_player(&x, &y, 20);
+            sfSprite_setOrigin(back, (sfVector2f){x, y});
+            dash = event;
+            event = test;
+        }
         if (event.type == sfEvtClosed && sfKeyQ != event.key.code &&
             sfKeyZ != event.key.code && sfKeyS != event.key.code &&
             sfKeyD != event.key.code && sfKeyA != event.key.code) {

@@ -32,22 +32,22 @@ int check_spe(int *x, int *y, int speed)
     return 0;
 }
 
-int move_player(int *x, int *y, sfEvent event, int speed)
+int move_player(int *x, int *y, int speed)
 {
     check_spe(x, y, speed);
-    if (sfKeyQ == event.key.code) {
+    if (sfKeyboard_isKeyPressed(sfKeyQ)) {
         *x = *x - speed;
         return 1;
     }
-    if (sfKeyD == event.key.code) {
+    if (sfKeyboard_isKeyPressed(sfKeyD)) {
         *x = *x + speed;
         return 1;
     }
-    if (sfKeyZ == event.key.code) {
+    if (sfKeyboard_isKeyPressed(sfKeyZ)) {
         *y = *y - speed;
         return 1;
     }
-    if (sfKeyS == event.key.code) {
+    if (sfKeyboard_isKeyPressed(sfKeyS)) {
         *y = *y + speed;
         return 1;
     }
