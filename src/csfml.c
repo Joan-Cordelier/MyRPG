@@ -59,7 +59,7 @@ void my_rpg(window_t *window, hero_t *plyr,
         move_anim(anim, plyr);
         if (set_move(event, back, window, plyr) == -1)
             break;
-        sfSprite_rotate(sword, 1);
+        sfSprite_rotate(sword, 10);
         rotate_png(plyr, window);
         sfRenderWindow_pollEvent(window->window, &event);
         draw_sprite(window, plyr, back, sword);
@@ -73,11 +73,11 @@ void menu_prcp(window_t *window, char *file, sfEvent event)
 {
     hero_t *plyr = hero("sprite/hero_rpg/hero.png", 150, 150);
     sfSprite *sword = fond("sprite/arme/epee-4.png", 1, 1);
-    sfVector2f sword_pos = {960, 480};
+    sfVector2f sword_pos = {960, 600};
 
     sfSprite_setOrigin(plyr->sprite, (sfVector2f){65, 50});
     sfSprite_setPosition(sword, sword_pos);
-    sfSprite_setOrigin(sword, (sfVector2f){65, 50});
+    sfSprite_setOrigin(sword, (sfVector2f){100, 150});
     my_rpg(window, plyr, sword, event);
     sfSprite_destroy(sword);
     sfSprite_destroy(plyr->sprite);
