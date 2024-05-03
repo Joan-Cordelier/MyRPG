@@ -116,14 +116,3 @@ int play_game(sfRenderWindow *window, sfEvent event)
     }
     return 0;
 }
-
-
-sfRenderWindow_display(window->window);
-        sfRenderWindow_pollEvent(window->window, &event);
-        if (event.type == sfEvtClosed)
-            sfRenderWindow_close(window->window);
-        sfRenderWindow_clear(window->window, sfBlack);
-        sfRenderWindow_drawSprite(window->window, back, NULL);
-        sfRenderWindow_drawSprite(window->window, plyr->sprite, NULL);
-        move_anim(anim, plyr);
-        sfRenderWindow_drawSprite(window->window, sword->sprite, NULL);

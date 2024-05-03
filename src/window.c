@@ -11,8 +11,8 @@ sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title)
 {
     sfVideoMode video_mode = {x, y, frame};
-    sfRenderWindow *window = sfRenderWindow_create(video_mode, title, sfResize |
-        sfClose, NULL);
+    sfRenderWindow *window = sfRenderWindow_create(video_mode,
+        title, sfResize | sfClose, NULL);
 
     sfRenderWindow_setFramerateLimit(window, frame);
     return window;

@@ -9,6 +9,7 @@ SRC :=	src/main.c	\
 		src/window.c \
 		src/csfml.c \
 		src/player.c \
+		src/pnj.c \
 
 OBJ := ${SRC:.c=.o}
 

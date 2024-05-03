@@ -10,6 +10,9 @@
     #include "lib.h"
     #include "struct.h"
     #include <string.h>
+hero_t *hero(char *file, int x, int y);
+void rotate_png(hero_t *plyr, window_t *window);
+int set_move(sfEvent event, sfSprite *back, window_t *window, hero_t *plyr);
 int move_player(int *x, int *y, int speed);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
@@ -28,7 +31,7 @@ void destroy_func(option_t *t, canva_t *board, sfRectangleShape *rect,
     sfClock *clock);
 void destroy_func2(pencil_t *pencil, sfText *t);
 button_t *init_folder_button(char *image, sfVector2f pos, char *name,
-    show s);
+    show_t s);
 void help_hover(option_t *t, window_t *window);
 void size_op(option_t *t, pencil_t *);
 void color_op(option_t *t, pencil_t *);
@@ -56,5 +59,5 @@ int my_strcmp(char *s1, char *s2);
 void edition_hover(option_t *t, window_t *window);
 void edition_off(option_t *t);
 void set_color(pencil_t *pencil);
-option_t *add_button(char *image, sfVector2f pos, char *name, show s);
+option_t *add_button(char *image, sfVector2f pos, char *name, show_t s);
 #endif

@@ -12,12 +12,12 @@ typedef enum {
     PRESSED,
     HOVER,
     CLICKED
-} states;
+} states_t;
 
 typedef enum {
     SHOW,
     HIDE,
-} show;
+} show_t;
 
 typedef struct canva_s {
     sfRectangleShape *rect;
@@ -33,8 +33,8 @@ typedef struct button_s {
     sfColor clicked;
     sfSprite *sprite;
     sfTexture *texture;
-    states state;
-    show s;
+    states_t state;
+    show_t s;
 } button_t;
 
 typedef struct rect_s {
@@ -72,7 +72,7 @@ typedef struct pencil_s {
     sfText *n_r;
     sfText *n_g;
     sfText *n_b;
-    states s;
+    states_t s;
     sfColor color;
 } pencil_t;
 
@@ -82,5 +82,7 @@ typedef struct hero_s {
     sfVector2f scale;
     sfVector2f pos;
     sfIntRect rect;
+    int posx;
+    int posy;
 } hero_t;
 #endif
