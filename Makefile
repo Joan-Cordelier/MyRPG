@@ -7,7 +7,8 @@
 
 SRC	=	$(wildcard src/*.c)		\
 
-TESTSRC	=	$(wildcard tests/put/*.c)	\
+TESTSRC	=	$(wildcard src/*.c)			\
+			$(wildcard tests/put/*.c)	\
 
 OBJ := ${SRC:.c=.o}
 

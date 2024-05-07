@@ -48,7 +48,7 @@ jobs:
             - name: is any codingstyle error
               run: |
                 NB=$(cat /tmp/coding-style-reports.log | wc -l)
-                if [ $NB -gt 1 ]; then
+                if [ $NB -gt 0 ]; then
                   exit 1
                 fi
 
@@ -73,24 +73,14 @@ jobs:
                 done
             - name: make clean
               run: make clean
-
-
-    run_tests:
-        runs-on: ubuntu-latest
-        container: epitechcontent/epitest-docker:latest
-        needs:  check_program_compilation
-        timeout-minutes: 2
-        steps:
-          - name: checkout
-            uses: actions/checkout@v4
-          - name: make tests run
-            run: make tests_run
+            - name: make test run
+              run: make tests_run
 
 
     push_to_mirror:
         runs-on: ubuntu-latest
         if: github.event_name == 'push'
-        needs: run_tests
+        needs: check_program_compilation
         steps:
             - name: checkout
               uses: actions/checkout@v4
