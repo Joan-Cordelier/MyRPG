@@ -5,15 +5,17 @@
 ## MAKEFILE
 ##
 
-SRC :=	src/main.c	\
-		src/window.c \
-		src/csfml.c \
-		src/player.c \
-		src/pnj.c \
+SRC	=	$(wildcard src/*.c)		\
+
+TESTSRC	=	$(wildcard tests/put/*.c)	\
 
 OBJ := ${SRC:.c=.o}
 
 NAME := my_rpg
+
+HEADER	=	my.h
+
+TEST	=	uni_tests
 
 CFLAGS := -g3 -Wall -Wextra -Iinclude
 
@@ -43,4 +45,12 @@ fclean: clean
 
 re: fclean clean all
 
-.PHONY: all clean fclean re
+$(TEST):	fclean
+	$(CC) -o $(TEST) $(TESTSRC) --coverage -lcriterion $(CFLAGS)
+
+tests_run:	$(TEST)
+	./$(TEST)
+	gcovr --exclude tests/
+	gcovr --exclude tests/ --branches
+
+.PHONY:	all clean fclean re $(TEST) tests_run
