@@ -82,6 +82,10 @@ typedef struct hero_s {
     sfVector2f scale;
     sfVector2f pos;
     sfIntRect rect;
+    sfView *run;
+    float angle;
+    int viewx;
+    int viewy;
     int posx;
     int posy;
 } hero_t;

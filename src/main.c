@@ -21,7 +21,7 @@ static char *get_login(char **env)
     return username;
 }
 
-int main(int ac, char **av, char **env)
+int main(int ac, char **av)
 {
     window_t *window = init_window(1920, 1080, 60, "My_RPG");
     sfEvent event;

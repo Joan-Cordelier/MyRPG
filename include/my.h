@@ -11,8 +11,8 @@
     #include "struct.h"
     #include <string.h>
 hero_t *hero(char *file, int x, int y);
-void rotate_png(hero_t *plyr, window_t *window);
-int set_move(sfEvent event, sfSprite *back, window_t *window, hero_t *plyr);
+void rotate_png(hero_t *plyr, window_t *window, sfVector2i button_positions);
+int set_move(sfSprite *back, window_t *window, hero_t *plyr);
 int move_player(int *x, int *y, int speed);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
@@ -60,4 +60,7 @@ void edition_hover(option_t *t, window_t *window);
 void edition_off(option_t *t);
 void set_color(pencil_t *pencil);
 option_t *add_button(char *image, sfVector2f pos, char *name, show_t s);
+float sword_rotate(hero_t *plyr, window_t *window,
+    sfVector2i button_positions);
+void poll_event(sfEvent event, window_t *window);
 #endif

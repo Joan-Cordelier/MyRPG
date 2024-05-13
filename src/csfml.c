@@ -7,6 +7,16 @@
 
 #include "my.h"
 
+static sfVector2i mouse(sfRenderWindow *window)
+{
+    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
+    sfVector2f final;
+
+    final = sfRenderWindow_mapPixelToCoords(window, mouse_pos,
+        sfRenderWindow_getView(window));
+    return (sfVector2i){final.x, final.y};
+}
+
 static sfSprite *fond(char *file, float x, float y)
 {
     sfTexture *texture = sfTexture_createFromFile(file, NULL);
@@ -42,6 +52,15 @@ static void move_anim(sfClock *clock, hero_t *cible)
 static void draw_sprite(window_t *window, hero_t *plyr, sfSprite *back,
     sfSprite *sword)
 {
+    sfVector2i button_positions = mouse(window->window);
+
+    sfView_setCenter(plyr->run, (sfVector2f){plyr->posx, plyr->posy});
+    sfSprite_setPosition(plyr->sprite,
+        (sfVector2f){plyr->posx, plyr->posy});
+    sfSprite_setPosition(sword, (sfVector2f){plyr->posx, plyr->posy});
+    plyr->angle = sword_rotate(plyr, window, button_positions);
+    rotate_png(plyr, window, button_positions);
+    sfSprite_setRotation(sword, plyr->angle);
     sfRenderWindow_clear(window->window, sfBlack);
     sfRenderWindow_drawSprite(window->window, back, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->sprite, NULL);
@@ -55,18 +74,18 @@ void my_rpg(window_t *window, hero_t *plyr,
     sfSprite *back = fond("sprite/map.jpg", 3, 3);
 
     sfSprite_setOrigin(back, (sfVector2f){75, 50});
+    plyr->run = sfView_create();
+    sfView_zoom(plyr->run, 1);
     while (sfRenderWindow_isOpen(window->window)) {
         move_anim(anim, plyr);
-        if (set_move(event, back, window, plyr) == -1)
-            break;
-        sfSprite_rotate(sword, 10);
-        rotate_png(plyr, window);
-        sfRenderWindow_pollEvent(window->window, &event);
+        set_move(back, window, plyr);
+        poll_event(event, window);
         draw_sprite(window, plyr, back, sword);
+        sfRenderWindow_setView(window->window, plyr->run);
         sfRenderWindow_display(window->window);
     }
-    sfClock_destroy(anim);
     sfSprite_destroy(back);
+    sfClock_destroy(anim);
 }
 
 void menu_prcp(window_t *window, char *file, sfEvent event)
@@ -75,8 +94,9 @@ void menu_prcp(window_t *window, char *file, sfEvent event)
     sfSprite *sword = fond("sprite/arme/epee-4.png", 1, 1);
     sfVector2f sword_pos = {960, 600};
 
-    sfSprite_setOrigin(plyr->sprite, (sfVector2f){65, 50});
-    sfSprite_setPosition(sword, sword_pos);
+    sfSprite_setPosition(sword, (sfVector2f){900, 500});
+    sfSprite_setPosition(plyr->sprite, sword_pos);
+    sfSprite_setOrigin(plyr->sprite, (sfVector2f){70, 70});
     sfSprite_setOrigin(sword, (sfVector2f){100, 150});
     my_rpg(window, plyr, sword, event);
     sfSprite_destroy(sword);

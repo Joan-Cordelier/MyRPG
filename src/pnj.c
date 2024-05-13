@@ -6,27 +6,44 @@
 */
 
 #include "my.h"
+#include <math.h>
 
-static sfVector2i mouse(sfRenderWindow *window)
-{
-    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
-    sfVector2f final;
-
-    final = sfRenderWindow_mapPixelToCoords(window, mouse_pos,
-        sfRenderWindow_getView(window));
-    return (sfVector2i){final.x, final.y};
-}
-
-void rotate_png(hero_t *plyr, window_t *window)
+void rotate_png(hero_t *plyr, window_t *window, sfVector2i button_positions)
 {
     sfVector2f scale1 = {-2, 2};
     sfVector2f scale2 = {2, 2};
-    sfVector2i button_positions = mouse(window->window);
+    sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
 
-    if (button_positions.x > 940)
+    if (button_positions.x > oriplyr.x) {
         sfSprite_setScale(plyr->sprite, scale1);
-    else
+    } else {
         sfSprite_setScale(plyr->sprite, scale2);
+        plyr->angle = plyr->angle * -1;
+    }
+}
+
+float sword_rotate(hero_t *plyr, window_t *window, sfVector2i button_positions)
+{
+    float a1 = 0.0;
+    float a2 = 0.0;
+    float b1 = 0.0;
+    float b2 = 0.0;
+    float cosinus = 0.0;
+    float t = 0.0;
+    float pi = 3.14159265359;
+
+    a1 = button_positions.x - plyr->posx;
+    a2 = button_positions.y - plyr->posy;
+    b1 = plyr->posx - plyr->posx;
+    b2 = (plyr->posy * -2) - plyr->posy;
+    if ((sqrtf((a1 * a1) + (a2 * a2)) == 0.0) ||
+        (sqrtf((b1 * b1) + (b2 * b2)) == 0.0))
+        return (0.0);
+    cosinus = (a1 * b1 + a2 * b2) / (sqrtf((a1 * a1) + (a2 * a2))
+        * sqrtf((b1 * b1) + (b2 * b2)));
+    t = acosf(cosinus);
+    t = t * 180.0 / pi;
+    return t;
 }
 
 hero_t *hero(char *file, int x, int y)

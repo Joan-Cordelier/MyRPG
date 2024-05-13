@@ -18,7 +18,7 @@ HEADER	=	my.h
 
 TEST	=	uni_tests
 
-CFLAGS := -g3 -Wall -Wextra -Iinclude
+CFLAGS := -g3 -fsanitize=address -Wall -Wextra -Iinclude
 
 CSFML := -lcsfml-graphics -lcsfml-audio
 
@@ -27,7 +27,7 @@ CSFML2 := -lcsfml-window -lcsfml-system -lcsfml-network
 all: $(NAME)
 
 $(NAME):	${OBJ}
-	$(CC) -o $(NAME) ${OBJ} ${CSFML} ${CSFML2} -O2
+	$(CC) -o $(NAME) ${OBJ} ${CSFML} ${CSFML2} -O2 -lm $(CFLAGS)
 
 clean:
 	rm -f $(NAME)
