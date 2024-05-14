@@ -59,7 +59,7 @@ static void draw_sprite(window_t *window, hero_t *plyr, sfSprite *back,
         (sfVector2f){plyr->posx, plyr->posy});
     sfSprite_setPosition(sword, (sfVector2f){plyr->posx, plyr->posy});
     plyr->angle = sword_rotate(plyr, window, button_positions);
-    rotate_png(plyr, window, button_positions);
+    rotate_png(plyr, window, button_positions, sword);
     sfSprite_setRotation(sword, plyr->angle);
     sfRenderWindow_clear(window->window, sfBlack);
     sfRenderWindow_drawSprite(window->window, back, NULL);

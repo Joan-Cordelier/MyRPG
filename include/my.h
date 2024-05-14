@@ -11,7 +11,8 @@
     #include "struct.h"
     #include <string.h>
 hero_t *hero(char *file, int x, int y);
-void rotate_png(hero_t *plyr, window_t *window, sfVector2i button_positions);
+void rotate_png(hero_t *plyr, window_t *window,
+    sfVector2i button_positions, sfSprite *sword);
 int set_move(sfSprite *back, window_t *window, hero_t *plyr);
 int move_player(int *x, int *y, int speed);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,

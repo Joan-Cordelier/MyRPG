@@ -8,16 +8,17 @@
 #include "my.h"
 #include <math.h>
 
-void rotate_png(hero_t *plyr, window_t *window, sfVector2i button_positions)
+void rotate_png(hero_t *plyr, window_t *window,
+    sfVector2i button_positions, sfSprite *sword)
 {
-    sfVector2f scale1 = {-2, 2};
-    sfVector2f scale2 = {2, 2};
     sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
 
     if (button_positions.x > oriplyr.x) {
-        sfSprite_setScale(plyr->sprite, scale1);
+        sfSprite_setScale(plyr->sprite, (sfVector2f){-2, 2});
+        sfSprite_setScale(sword, (sfVector2f){1, 1});
     } else {
-        sfSprite_setScale(plyr->sprite, scale2);
+        sfSprite_setScale(plyr->sprite, (sfVector2f){2, 2});
+        sfSprite_setScale(sword, (sfVector2f){-1, 1});
         plyr->angle = plyr->angle * -1;
     }
 }
