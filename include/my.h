@@ -19,7 +19,7 @@ sfRenderWindow *create_window(unsigned int x, unsigned int y,
 int my_strncmp(char const *s1, char const *s2, int n);
 void menu_prcp(window_t *window, char *file, sfEvent event);
 void event_close(window_t *window, sfEvent event);
-void my_putstr(char *str);
+int my_putstr(char const *str);
 sfText *init_text_size(void);
 char *my_itoa(int value);
 void update_text_size(sfText *text, pencil_t *pencil);

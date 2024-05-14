@@ -7,7 +7,7 @@
 
 SRC	=	$(wildcard src/*.c)		\
 
-TESTSRC	=	$(wildcard src/*.c)			\
+TESTSRC	=	$(wildcard src/put/*.c)			\
 			$(wildcard tests/put/*.c)	\
 
 OBJ := ${SRC:.c=.o}
@@ -18,7 +18,7 @@ HEADER	=	my.h
 
 TEST	=	uni_tests
 
-CFLAGS := -g3 -fsanitize=address -Wall -Wextra -Iinclude
+CFLAGS := -g3 -Wall -Wextra -Iinclude
 
 CSFML := -lcsfml-graphics -lcsfml-audio
 
