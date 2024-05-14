@@ -92,7 +92,7 @@ void my_rpg(window_t *window, hero_t *plyr,
 void menu_prcp(window_t *window, char *file, sfEvent event)
 {
     hero_t *plyr = hero("sprite/hero_rpg/hero.png", 150, 150);
-    sfSprite *sword = fond("sprite/arme/epee-1.png", 1, 1);
+    sfSprite *sword = fond("sprite/arme/shotgun-1.png", 1, 1);
     sfVector2f sword_pos = {960, 600};
 
     sfSprite_setPosition(sword, (sfVector2f){900, 500});
