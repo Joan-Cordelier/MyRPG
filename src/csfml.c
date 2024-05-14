@@ -30,7 +30,7 @@ static sfSprite *fond(char *file, float x, float y)
 
 void move_rect(sfIntRect *rect, int offset, int max)
 {
-    for (int n = 0; n <= 2; n++) {
+    for (int n = 0; n <= 3; n++) {
         rect->left += offset;
         if (rect->left >= max)
             rect->left = 0;
@@ -44,7 +44,7 @@ static void move_anim(sfClock *clock, hero_t *cible)
     clock_espl = sfClock_getElapsedTime(clock);
     if (clock_espl.microseconds > 300000) {
         sfSprite_setTextureRect(cible->sprite, cible->rect);
-        move_rect(&cible->rect, 140, 280);
+        move_rect(&cible->rect, 140, 340);
         sfClock_restart(clock);
     }
 }
@@ -75,6 +75,7 @@ void my_rpg(window_t *window, hero_t *plyr,
 
     sfSprite_setOrigin(back, (sfVector2f){75, 50});
     plyr->run = sfView_create();
+    sfView_setSize(plyr->run, (sfVector2f){1750, 1000});
     sfView_zoom(plyr->run, 1);
     while (sfRenderWindow_isOpen(window->window)) {
         move_anim(anim, plyr);
@@ -91,7 +92,7 @@ void my_rpg(window_t *window, hero_t *plyr,
 void menu_prcp(window_t *window, char *file, sfEvent event)
 {
     hero_t *plyr = hero("sprite/hero_rpg/hero.png", 150, 150);
-    sfSprite *sword = fond("sprite/arme/epee-4.png", 1, 1);
+    sfSprite *sword = fond("sprite/arme/epee-1.png", 1, 1);
     sfVector2f sword_pos = {960, 600};
 
     sfSprite_setPosition(sword, (sfVector2f){900, 500});
