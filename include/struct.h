@@ -54,6 +54,8 @@ typedef struct window_s {
     unsigned int x;
     unsigned int y;
     unsigned int frame;
+    int speed;
+    sfVector2i button_positions;
     sfVector2i pos;
     sfVector2i pos2;
     char *login;

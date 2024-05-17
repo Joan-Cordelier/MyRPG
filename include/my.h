@@ -63,5 +63,7 @@ void set_color(pencil_t *pencil);
 option_t *add_button(char *image, sfVector2f pos, char *name, show_t s);
 float sword_rotate(hero_t *plyr, window_t *window,
     sfVector2i button_positions);
-void poll_event(sfEvent event, window_t *window);
+sfSprite *poll_event(sfEvent event, window_t *window, int change, sfSprite *sword);
+sfVector2i mouse(sfRenderWindow *window);
+sfSprite *fond(char *file, float x, float y);
 #endif

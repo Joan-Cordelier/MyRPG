@@ -9,19 +9,23 @@
 
 void check_spe(int *x, int *y, int speed)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyZ) && sfKeyboard_isKeyPressed(sfKeyD)) {
+    if (sfKeyboard_isKeyPressed(sfKeyZ) && sfKeyboard_isKeyPressed(sfKeyD) && 
+        *x <= 3000 && *y >= 0) {
         *y = *y - speed * 0.5;
         *x = *x + speed * 0.5;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyD)) {
+    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyD) && 
+        *x <= 3000 && *y <= 3000) {
         *y = *y + speed * 0.5;
         *x = *x + speed * 0.5;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyQ)) {
+    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyQ) && 
+        *x >= 0 && *y <= 3000) {
         *y = *y + speed * 0.5;
         *x = *x - speed * 0.5;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyQ) && sfKeyboard_isKeyPressed(sfKeyZ)) {
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && sfKeyboard_isKeyPressed(sfKeyZ) && 
+        *x >= 0 && *y >= 0) {
         *y = *y - speed * 0.5;
         *x = *x - speed * 0.5;
     }
@@ -30,19 +34,19 @@ void check_spe(int *x, int *y, int speed)
 int move_player(int *x, int *y, int speed)
 {
     check_spe(x, y, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyQ)) {
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && *x >= 0) {
         *x = *x - speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyD)) {
+    if (sfKeyboard_isKeyPressed(sfKeyD) && *x <= 3000) {
         *x = *x + speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyZ)) {
+    if (sfKeyboard_isKeyPressed(sfKeyZ) && *y >= 0) {
         *y = *y - speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS)) {
+    if (sfKeyboard_isKeyPressed(sfKeyS) && *y <= 3000) {
         *y = *y + speed;
         return 1;
     }

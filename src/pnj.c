@@ -12,6 +12,7 @@ void rotate_png(hero_t *plyr, window_t *window,
     sfVector2i button_positions, sfSprite *sword)
 {
     sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
+    //sfVector2i button_positions = mouse(window->window);
 
     if (button_positions.x > oriplyr.x) {
         sfSprite_setScale(plyr->sprite, (sfVector2f){-2, 2});
@@ -65,6 +66,7 @@ hero_t *hero(char *file, int x, int y)
     cible->posx = 65;
     cible->posy = 50;
     sfSprite_setTexture(cible->sprite, cible->texture, sfTrue);
+    sfSprite_setTextureRect(cible->sprite, cible->rect);
     sfSprite_setScale(cible->sprite, cible->scale);
     sfSprite_setPosition(cible->sprite, cible->pos);
     return cible;
