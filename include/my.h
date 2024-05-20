@@ -66,4 +66,24 @@ float sword_rotate(hero_t *plyr, window_t *window,
 sfSprite *poll_event(sfEvent event, window_t *window, int change, sfSprite *sword);
 sfVector2i mouse(sfRenderWindow *window);
 sfSprite *fond(char *file, float x, float y);
+void init_player(hero_t *player);
+
+/*
+** personage
+*/
+#define LIFE 100
+#define MANA 100
+#define MANA_REG 10 /*taux en pourcentage de régénération*/
+#define LIFE_REG 20 /*taux en pourcentage de régénération*/
+#define DEGAT_MOB 5
+#define NB_FIOL 4
+/*
+** arme
+*/
+#define EPEE_1 1
+#define EPEE_2 2
+#define EPEE_3 3
+#define EPEE_4 4
+#define SHOTGUN 5
+#define MAGIE 6
 #endif

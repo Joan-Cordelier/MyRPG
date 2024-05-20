@@ -65,6 +65,7 @@ hero_t *hero(char *file, int x, int y)
     cible->rect.height = y;
     cible->posx = 65;
     cible->posy = 50;
+    init_player(cible);
     sfSprite_setTexture(cible->sprite, cible->texture, sfTrue);
     sfSprite_setTextureRect(cible->sprite, cible->rect);
     sfSprite_setScale(cible->sprite, cible->scale);

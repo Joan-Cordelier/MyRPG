@@ -7,6 +7,19 @@
 
 #include "my.h"
 
+void init_player(hero_t *player)
+{
+    player->player = malloc(sizeof(weapon_t));
+    player->player->life = LIFE;
+    player->player->mana = MANA;
+    player->player->nb_fiol = NB_FIOL;
+    player->player->weap_hnd = EPEE_1;
+    player->player->lv_magie = 1;
+    player->player->lv_shotgun = 1;
+    player->player->lv_sword = 1;
+    player->player->niv = 1;
+}
+
 void check_spe(int *x, int *y, int speed)
 {
     if (sfKeyboard_isKeyPressed(sfKeyZ) && sfKeyboard_isKeyPressed(sfKeyD) && 
