@@ -9,7 +9,7 @@
 
 void init_player(hero_t *player)
 {
-    player->player = malloc(sizeof(weapon_t));
+    player->player = malloc(sizeof(stat_t));
     player->player->life = LIFE;
     player->player->mana = MANA;
     player->player->nb_fiol = NB_FIOL;

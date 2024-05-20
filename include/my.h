@@ -69,7 +69,7 @@ sfSprite *fond(char *file, float x, float y);
 void init_player(hero_t *player);
 
 /*
-** personage
+** stat
 */
 #define LIFE 100
 #define MANA 100
@@ -77,6 +77,8 @@ void init_player(hero_t *player);
 #define LIFE_REG 20 /*taux en pourcentage de régénération*/
 #define DEGAT_MOB 5
 #define NB_FIOL 4
+#define SPEED_W 5
+#define LEVEL_UP 2 /*taux de level up par niveaux, exemple: degats x2*/
 /*
 ** arme
 */
