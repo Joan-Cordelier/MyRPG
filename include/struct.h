@@ -121,4 +121,5 @@ typedef struct hero_s {
     int posx;
     int posy;
 } hero_t;
+
 #endif

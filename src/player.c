@@ -74,13 +74,6 @@ int set_move(sfEvent event, window_t *window, hero_t *plyr)
     clock_espl = sfClock_getElapsedTime(plyr->endspe);
     printf("clock22 = %lld\n", clock_espl.microseconds);
     printf("end = %d\n", plyr->player->end);
-    /* if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end >= 0) {
-        move_player(&plyr->posx, &plyr->posy, 30);
-        plyr->player->end = plyr->player->end - 25;
-    } else */
-    /* while (sfRenderWindow_pollEvent(window->window, &event)) {
-        
-    } */
     if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end > 0) {
         sfClock_restart(plyr->endspe);
         move_player(&plyr->posx, &plyr->posy, 50);
@@ -95,3 +88,14 @@ int set_move(sfEvent event, window_t *window, hero_t *plyr)
     sfSprite_setTextureRect(plyr->spStam, plyr->recStam);
     return 0;
 }
+
+
+//was line 77
+
+   /* if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end >= 0) {
+        move_player(&plyr->posx, &plyr->posy, 30);
+        plyr->player->end = plyr->player->end - 25;
+    } else */
+    /* while (sfRenderWindow_pollEvent(window->window, &event)) {
+        
+    } */

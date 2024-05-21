@@ -37,9 +37,7 @@ clean:
 	rm -f *.gcda
 	rm -f *.gcno
 	rm -f ${OBJ}
-	rm -f ${TESTNAME}
-	rm -f ${TESTOBJ}
-
+	rm -f ${TEST}
 
 fclean: clean
 	rm -f $(NAME)
