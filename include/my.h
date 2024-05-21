@@ -93,6 +93,9 @@ sfSprite *fond(char *file, float x, float y);
 sfSprite *change_arms(sfSprite *sword, char **arms,
     int *change);
 
+//csfml.c
+void move_rect(sfIntRect *rect, int offset, int max);
+
 //csfml2.c
 void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back);
 void moove_and_set(hero_t *plyr, sfEvent event, window_t *window);
