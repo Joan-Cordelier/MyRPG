@@ -79,10 +79,12 @@ typedef struct pencil_s {
     sfColor color;
 } pencil_t;
 
-/* typedef struct weapon_s {
+typedef struct weapon_s {
     int dega;
     int speed;
-} weapon_t; */
+    sfTexture *texture;
+    sfSprite *sprite;
+} weapon_t;
 
 typedef struct stat_s {
     int life;
@@ -115,6 +117,7 @@ typedef struct hero_s {
     sfIntRect recMan;
     sfView *run;
     stat_t *player;
+    weapon_t *arme;
     float angle;
     int viewx;
     int viewy;
