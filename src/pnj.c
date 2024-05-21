@@ -95,17 +95,26 @@ static void bar(hero_t *cible)
     set_hero(cible);
 }
 
+static void init_rectange_shape(hero_t *hero)
+{
+    hero->colision = sfRectangleShape_create();
+    sfRectangleShape_setOrigin(hero->colision, (sfVector2f){50, 60});
+    sfRectangleShape_setPosition(hero->colision, hero->pos);
+    sfRectangleShape_setSize(hero->colision, (sfVector2f){100, 120});
+    sfRectangleShape_setFillColor(hero->colision, sfTransparent);
+    sfRectangleShape_setOutlineThickness(hero->colision, 2);
+    sfRectangleShape_setOutlineColor(hero->colision, sfGreen);
+}
+
 hero_t *hero(char *file, int x, int y)
 {
     hero_t *cible = malloc(sizeof(hero_t));
-    sfVector2f scale = {2, 2};
-    sfVector2f pos = {960, 540};
 
     srand(time(NULL));
     cible->texture = sfTexture_createFromFile(file, NULL);
     cible->sprite = sfSprite_create();
-    cible->scale = scale;
-    cible->pos = pos;
+    cible->scale = (sfVector2f){2, 2};
+    cible->pos = (sfVector2f){960, 540};
     cible->rect.top = 0;
     cible->rect.left = 0;
     cible->rect.width = x;
@@ -114,6 +123,7 @@ hero_t *hero(char *file, int x, int y)
     cible->posy = 50;
     cible->endspe = sfClock_create();
     cible->anim = sfClock_create();
+    init_rectange_shape(cible);
     init_player(cible);
     bar(cible);
     return cible;

@@ -19,12 +19,6 @@ typedef enum {
     HIDE,
 } show_t;
 
-typedef struct canva_s {
-    sfRectangleShape *rect;
-    sfImage *image;
-    sfTexture *texture;
-} canva_t;
-
 typedef struct button_s {
     char *name;
     sfRectangleShape *rect;
@@ -99,6 +93,7 @@ typedef struct stat_s {
 } stat_t;
 
 typedef struct hero_s {
+    sfRectangleShape *colision;
     sfClock *anim;
     sfClock *endspe;
     sfTexture *texture;

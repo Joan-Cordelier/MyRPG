@@ -26,6 +26,7 @@ void my_destroy(hero_t *sprite)
     sfSprite_destroy(sprite->spStam);
     sfTexture_destroy(sprite->texMan);
     sfSprite_destroy(sprite->spMan);
+    sfRectangleShape_destroy(sprite->colision);
 }
 
 void my_destroy_w(weapon_t *arme)

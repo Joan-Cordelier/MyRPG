@@ -21,10 +21,9 @@ sfSprite *fond(char *file, float x, float y)
 {
     sfTexture *texture = sfTexture_createFromFile(file, NULL);
     sfSprite *sprite = sfSprite_create();
-    sfVector2f scale = {x, y};
 
     sfSprite_setTexture(sprite, texture, sfTrue);
-    sfSprite_setScale(sprite, scale);
+    sfSprite_setScale(sprite, (sfVector2f){x, y});
     return sprite;
 }
 
