@@ -54,6 +54,8 @@ static void draw_sprite(window_t *window, hero_t *plyr,
         (sfVector2f){plyr->posx - 50, plyr->posy - 180});
     sfSprite_setPosition(plyr->spMan,
         (sfVector2f){plyr->posx - 50, plyr->posy - 170});
+    sfRectangleShape_setPosition(plyr->colision,
+        (sfVector2f){plyr->posx, plyr->posy});
     plyr->angle = sword_rotate(plyr, window, button_positions);
     rotate_png(plyr, window, button_positions, sword);
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0)
@@ -72,6 +74,7 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back,
     sfRenderWindow_drawSprite(window->window, plyr->spStam, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->spMan, NULL);
     sfRenderWindow_drawSprite(window->window, sword, NULL);
+    sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);
 }
 
 static void enemie(hero_t *mob, hero_t *plyr, window_t *window)
@@ -88,8 +91,12 @@ static void enemie(hero_t *mob, hero_t *plyr, window_t *window)
     sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
     sfSprite_setPosition(mob->spHP,
         (sfVector2f){mob->posx - 50, mob->posy - 190});
+    sfRectangleShape_setPosition(mob->colision,
+        (sfVector2f){mob->posx, mob->posy});
+    colision(mob, plyr);
     sfRenderWindow_drawSprite(window->window, mob->sprite, NULL);
     sfRenderWindow_drawSprite(window->window, mob->spHP, NULL);
+    sfRenderWindow_drawRectangleShape(window->window, mob->colision, NULL);
 }
 
 static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, sfSprite *back,
