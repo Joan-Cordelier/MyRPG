@@ -6,6 +6,7 @@
 ##
 
 SRC	=	$(wildcard src/*.c)		\
+		$(wildcard src/map/*.c)	\
 
 TESTSRC	=	$(wildcard src/put/*.c)			\
 			$(wildcard tests/put/*.c)	\
@@ -18,16 +19,14 @@ HEADER	=	my.h
 
 TEST	=	uni_tests
 
-CFLAGS := -g3 -Wall -Wextra -I ./include
+CFLAGS := -Wall -Wextra -I ./include/
 
-CSFML := -lcsfml-graphics -lcsfml-audio
-
-CSFML2 := -lcsfml-window -lcsfml-system -lcsfml-network
+CSFML := -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 
 all: $(NAME)
 
 $(NAME):	${OBJ}
-	$(CC) -o $(NAME) ${OBJ} ${CSFML} ${CSFML2} -O2 -lm $(CFLAGS)
+	$(CC) -o $(NAME) ${OBJ} ${CSFML} -lm $(CFLAGS)
 
 clean:
 	rm -f $(NAME)

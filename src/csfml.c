@@ -35,8 +35,8 @@ static void draw_sprite(window_t *window, hero_t *plyr,
         (sfVector2f){plyr->posx - 50, plyr->posy - 170});
     sfRectangleShape_setPosition(plyr->colision,
         (sfVector2f){plyr->posx, plyr->posy});
-    plyr->angle = sword_rotate(plyr, window, button_positions);
-    rotate_png(plyr, window, button_positions, sword);
+    plyr->angle = sword_rotate(plyr, button_positions);
+    rotate_png(plyr, button_positions, sword);
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0)
         plyr->angle = plyr->angle - 90.0;
     sfSprite_setRotation(sword, plyr->angle);
@@ -56,7 +56,26 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back,
     sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);
 }
 
-static void enemie(hero_t *mob, hero_t *plyr, window_t *window)
+static void set_and_draw(hero_t *mob, window_t *window, int set_draw)
+{
+    if (set_draw == SET) {
+        sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
+        sfSprite_setPosition(mob->spHP,
+            (sfVector2f){mob->posx - 50, mob->posy - 190});
+        sfSprite_setPosition(mob->spW,
+            (sfVector2f){mob->posx, mob->posy + 10});
+        sfRectangleShape_setPosition(mob->colision,
+            (sfVector2f){mob->posx, mob->posy});
+    }
+    if (set_draw == DRAW) {
+        sfRenderWindow_drawSprite(window->window, mob->sprite, NULL);
+        sfRenderWindow_drawSprite(window->window, mob->spW, NULL);
+        sfRenderWindow_drawSprite(window->window, mob->spHP, NULL);
+        sfRenderWindow_drawRectangleShape(window->window, mob->colision, NULL);
+    }
+}
+
+static void enemie(hero_t *mob, hero_t *plyr, window_t *window, map_t *map)
 {
     if (plyr->posx > mob->posx)
         mob->posx = mob->posx + 7;
@@ -67,61 +86,57 @@ static void enemie(hero_t *mob, hero_t *plyr, window_t *window)
     if (plyr->posy < mob->posy)
         mob->posy = mob->posy - 7;
     move_anim(mob, 2);
-    sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
-    sfSprite_setPosition(mob->spHP,
-        (sfVector2f){mob->posx - 50, mob->posy - 190});
-    sfSprite_setPosition(mob->spW,
-        (sfVector2f){mob->posx, mob->posy + 10});
-    sfRectangleShape_setPosition(mob->colision,
-        (sfVector2f){mob->posx, mob->posy});
-    colision(mob, plyr);
-    mob->angle = sword_rotate(mob, window,
-        (sfVector2i){plyr->posx, plyr->posy});
-    rotate_mob(plyr, window, mob);
-    sfSprite_setRotation(mob->spW, mob->angle);
-    sfRenderWindow_drawSprite(window->window, mob->sprite, NULL);
-    sfRenderWindow_drawSprite(window->window, mob->spW, NULL);
-    sfRenderWindow_drawSprite(window->window, mob->spHP, NULL);
-    sfRenderWindow_drawRectangleShape(window->window, mob->colision, NULL);
+    set_and_draw(mob, window, SET);
+    colision(mob, plyr, map);
+    mob->angle = sword_rotate(mob, (sfVector2i){plyr->posx, plyr->posy});
+    rotate_mob(plyr, mob);
+    set_and_draw(mob, window, DRAW);
 }
 
-static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, sfSprite *back,
+static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map,
     sfSprite *shoot)
 {
-    sfSprite_setOrigin(back, (sfVector2f){0, 0});
+    sfSprite_setOrigin(map->map, (sfVector2f){0, 0});
     plyr->run = sfView_create();
     sfView_setSize(plyr->run, (sfVector2f){1750, 1000});
     sfSprite_setOrigin(mob->sprite, (sfVector2f){70, 70});
     sfSprite_setOrigin(shoot, (sfVector2f){32, 32});
     sfView_zoom(plyr->run, 1);
+    plyr->posx = map->start_player.x;
+    plyr->posy = map->start_player.y;
+    mob->posx = map->start_player.x;
+    mob->posy = map->start_player.y;
 }
 
 void my_rpg(window_t *window, hero_t *plyr,
     sfSprite *sword, hero_t *mob)
 {
-    sfSprite *back = fond("sprite/map.png", 3, 3);
+    map_t *map = malloc(sizeof(map_t));
     sfSprite *shoot = fond("sprite/fire_ball.png", 1, 1);
     char *arms[] = {"epee-3.png", "shotgun-1.png", NULL};
     sfEvent event;
 
-    set_mob_back_shoot(mob, plyr, back, shoot);
+    init_map(map);
+    while (map->prev != NULL)
+        map = map->prev;
+    set_mob_back_shoot(mob, plyr, map, shoot);
     while (sfRenderWindow_isOpen(window->window)) {
         sword = change_arms(sword, arms, &window->change);
         if (window->speed == 0)
             sfSprite_setPosition(shoot, (sfVector2f){plyr->posx, plyr->posy});
-        moove_and_set(plyr, event, window, mob);
+        moove_and_set(plyr);
         draw_sprite(window, plyr, sword, window->change);
-        show_window(window, plyr, back, sword);
-        enemie(mob, plyr, window);
+        show_window(window, plyr, map->map, sword);
+        enemie(mob, plyr, window, map);
         shoot = poll_event(event, window, plyr, shoot);
         if (window->speed == 0)
             sfSprite_setRotation(shoot, plyr->angle);
         sfRenderWindow_display(window->window);
     }
-    destroy_sprites(mob->sprite, shoot, back);
+    destroy_sprites(mob->sprite, shoot, map->map);
 }
 
-void menu_prcp(window_t *window, char *file, sfEvent event)
+void menu_prcp(window_t *window)
 {
     hero_t *plyr = hero("sprite/hero_rpg/hero.png", 140, 140);
     sfSprite *sword = fond("sprite/arme/epee-4.png", 1, 1);

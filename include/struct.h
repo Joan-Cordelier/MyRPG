@@ -8,12 +8,18 @@
 #ifndef STRUCT
     #define STRUCT
     #include <stdbool.h>
+
 typedef enum {
     NONE,
     PRESSED,
     HOVER,
     CLICKED
 } states_t;
+
+enum {
+    SET,
+    DRAW
+};
 
 typedef enum {
     SHOW,
@@ -121,7 +127,17 @@ typedef struct hero_s {
     int viewy;
     int posx;
     int posy;
-    bool vie
+    bool vie;
 } hero_t;
+
+typedef struct map_s {
+    char *name;
+    sfSprite *map;
+    sfVector2f start_player;
+    sfRectangleShape *exit_player;
+    sfVector2f *start_mob;
+    struct map_s *next;
+    struct map_s *prev;
+} map_t;
 
 #endif

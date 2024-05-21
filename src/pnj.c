@@ -8,8 +8,7 @@
 #include "my.h"
 #include <math.h>
 
-void rotate_png(hero_t *plyr, window_t *window,
-    sfVector2i button_positions, sfSprite *sword)
+void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword)
 {
     sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
 
@@ -23,8 +22,7 @@ void rotate_png(hero_t *plyr, window_t *window,
     }
 }
 
-void rotate_mob(hero_t *plyr, window_t *window,
-    hero_t *mob)
+void rotate_mob(hero_t *plyr, hero_t *mob)
 {
     sfVector2f oriplyr = sfSprite_getPosition(mob->sprite);
 
@@ -36,9 +34,10 @@ void rotate_mob(hero_t *plyr, window_t *window,
         sfSprite_setScale(mob->sprite, (sfVector2f){2, 2});
         sfSprite_setScale(mob->spW, (sfVector2f){2, 2});
     }
+    sfSprite_setRotation(mob->spW, mob->angle);
 }
 
-float sword_rotate(hero_t *plyr, window_t *window, sfVector2i button_positions)
+float sword_rotate(hero_t *plyr, sfVector2i button_positions)
 {
     float a1 = 0.0;
     float a2 = 0.0;
@@ -139,8 +138,8 @@ hero_t *hero(char *file, int x, int y)
     cible->rect.left = 0;
     cible->rect.width = x;
     cible->rect.height = y;
-    cible->posx = 65;
-    cible->posy = 50;
+    cible->posx = 0;
+    cible->posy = 0;
     cible->endspe = sfClock_create();
     cible->anim = sfClock_create();
     init_rectange_shape(cible);

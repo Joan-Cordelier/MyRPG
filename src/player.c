@@ -23,23 +23,19 @@ void init_player(hero_t *player)
 
 void check_spe(int *x, int *y, int speed)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyZ) && sfKeyboard_isKeyPressed(sfKeyD) &&
-        *x <= 2800 && *y >= 200) {
+    if (sfKeyboard_isKeyPressed(sfKeyZ) && sfKeyboard_isKeyPressed(sfKeyD)) {
         *y = *y - speed * 0.5;
         *x = *x + speed * 0.5;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyD) &&
-        *x <= 2800 && *y <= 2800) {
+    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyD)) {
         *y = *y + speed * 0.5;
         *x = *x + speed * 0.5;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyQ) &&
-        *x >= 200 && *y <= 2800) {
+    if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyQ)) {
         *y = *y + speed * 0.5;
         *x = *x - speed * 0.5;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyQ) && sfKeyboard_isKeyPressed(sfKeyZ) &&
-        *x >= 200 && *y >= 200) {
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && sfKeyboard_isKeyPressed(sfKeyZ)) {
         *y = *y - speed * 0.5;
         *x = *x - speed * 0.5;
     }
@@ -48,32 +44,30 @@ void check_spe(int *x, int *y, int speed)
 int move_player(int *x, int *y, int speed)
 {
     check_spe(x, y, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyQ) && *x >= 200) {
+    if (sfKeyboard_isKeyPressed(sfKeyQ)) {
         *x = *x - speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyD) && *x <= 2800) {
+    if (sfKeyboard_isKeyPressed(sfKeyD)) {
         *x = *x + speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyZ) && *y >= 200) {
+    if (sfKeyboard_isKeyPressed(sfKeyZ)) {
         *y = *y - speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS) && *y <= 2800) {
+    if (sfKeyboard_isKeyPressed(sfKeyS)) {
         *y = *y + speed;
         return 1;
     }
     return 0;
 }
 
-int set_move(sfEvent event, window_t *window, hero_t *plyr)
+int set_move(hero_t *plyr)
 {
     sfTime clock_espl;
 
     clock_espl = sfClock_getElapsedTime(plyr->endspe);
-    printf("clock22 = %lld\n", clock_espl.microseconds);
-    printf("end = %d\n", plyr->player->end);
     if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end > 0) {
         sfClock_restart(plyr->endspe);
         move_player(&plyr->posx, &plyr->posy, 50);

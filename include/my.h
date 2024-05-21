@@ -31,22 +31,10 @@
     #define SHOTGUN 5
     #define MAGIE 6
 
-hero_t *hero(char *file, int x, int y);
-void rotate_png(hero_t *plyr, window_t *window,
-    sfVector2i button_positions, sfSprite *sword);
-void rotate_mob(hero_t *plyr, window_t *window,
-    hero_t *mob);
-int set_move(sfEvent event, window_t *window, hero_t *plyr);
-int move_player(int *x, int *y, int speed);
-sfRenderWindow *create_window(unsigned int x, unsigned int y,
-    unsigned int frame, char *title);
-void menu_prcp(window_t *window, char *file, sfEvent event);
 int my_putstr(char const *str);
-window_t *init_window(unsigned int x, unsigned int y, int frame, char *title);
-float sword_rotate(hero_t *plyr, window_t *window,
-    sfVector2i button_positions);
-sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr,
-    sfSprite *sword);
+
+//colision.c
+void colision(hero_t *mob, hero_t *plyr, map_t *map);
 
 //csfml_utils.c
 sfVector2i mouse(sfRenderWindow *window);
@@ -55,16 +43,38 @@ sfSprite *change_arms(sfSprite *sword, char **arms,
     int *change);
 
 //csfml.c
+void menu_prcp(window_t *window);
 void move_rect(sfIntRect *rect, int offset, int max, int i);
 
 //csfml2.c
 void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back);
-void moove_and_set(hero_t *plyr, sfEvent event, window_t *window, hero_t *mob);
+void moove_and_set(hero_t *plyr);
 void move_anim(hero_t *cible, int n);
 
 //death.c
-void dead(hero_t *hero);
+void dead(hero_t *hero, map_t *map);
 
+//event.c
+sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr,
+    sfSprite *sword);
+
+//map_utils.c
+void init_map(map_t *map);
+
+//player.c
 void init_player(hero_t *player);
+int move_player(int *x, int *y, int speed);
+int set_move(hero_t *plyr);
+
+//pnj.c
+hero_t *hero(char *file, int x, int y);
+void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword);
+void rotate_mob(hero_t *plyr, hero_t *mob);
+float sword_rotate(hero_t *plyr, sfVector2i button_positions);
+
+//window.c
+sfRenderWindow *create_window(unsigned int x, unsigned int y,
+    unsigned int frame, char *title);
+window_t *init_window(unsigned int x, unsigned int y, int frame, char *title);
 
 #endif

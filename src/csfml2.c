@@ -26,8 +26,8 @@ void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back)
     sfSprite_destroy(back);
 }
 
-void moove_and_set(hero_t *plyr, sfEvent event, window_t *window, hero_t *mob)
+void moove_and_set(hero_t *plyr)
 {
     move_anim(plyr, 3);
-    set_move(event, window, plyr);
+    set_move(plyr);
 }

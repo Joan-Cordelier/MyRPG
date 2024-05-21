@@ -39,6 +39,7 @@ void my_free(hero_t *sprite, weapon_t *arme)
 {
     my_destroy(sprite);
     my_destroy_w(sprite->arme);
+    my_destroy_w(arme);
     free(sprite->player);
     free(sprite->arme);
     free(sprite);
