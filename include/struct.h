@@ -7,6 +7,7 @@
 
 #ifndef STRUCT
     #define STRUCT
+    #include <stdbool.h>
 typedef enum {
     NONE,
     PRESSED,
@@ -118,6 +119,7 @@ typedef struct hero_s {
     int viewy;
     int posx;
     int posy;
+    bool vie
 } hero_t;
 
 #endif
