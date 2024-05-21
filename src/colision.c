@@ -18,6 +18,8 @@ void colision(hero_t *mob, hero_t *plyr)
         plyr->player->life = plyr->player->life - DEGAT_MOB;
         if (plyr->player->life <= 0)
             dead(plyr);
+        plyr->recHP.width = plyr->recHP.width - DEGAT_MOB;
+        sfSprite_setTextureRect(plyr->spHP, plyr->recHP);
     } else {
         sfRectangleShape_setOutlineColor(plyr->colision, sfGreen);
         sfRectangleShape_setOutlineColor(mob->colision, sfGreen);

@@ -60,6 +60,9 @@ void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back);
 void moove_and_set(hero_t *plyr, sfEvent event, window_t *window);
 void move_anim(hero_t *cible);
 
+//death.c
+void dead(hero_t *hero);
+
 void init_player(hero_t *player);
 
 #endif
