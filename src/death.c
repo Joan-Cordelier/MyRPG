@@ -18,7 +18,7 @@ void dead(hero_t *hero)
     hero->recHP.width = 100;
     sfSprite_setTextureRect(hero->spHP, hero->recHP);
     hero->recMan.width = 100;
-    sfSprite_setTextureRect(hero->spHP, hero->recMan);
+    sfSprite_setTextureRect(hero->spMan, hero->recMan);
     hero->recStam.width = 100;
-    sfSprite_setTextureRect(hero->spHP, hero->recStam);
+    sfSprite_setTextureRect(hero->spStam, hero->recStam);
 }

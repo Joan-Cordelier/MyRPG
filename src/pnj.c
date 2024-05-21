@@ -23,6 +23,21 @@ void rotate_png(hero_t *plyr, window_t *window,
     }
 }
 
+void rotate_mob(hero_t *plyr, window_t *window,
+    hero_t *mob)
+{
+    sfVector2f oriplyr = sfSprite_getPosition(mob->sprite);
+
+    if (plyr->posx < oriplyr.x) {
+        sfSprite_setScale(mob->sprite, (sfVector2f){-2, 2});
+        sfSprite_setScale(mob->spW, (sfVector2f){-2, 2});
+        mob->angle = mob->angle * -1;
+    } else {
+        sfSprite_setScale(mob->sprite, (sfVector2f){2, 2});
+        sfSprite_setScale(mob->spW, (sfVector2f){2, 2});
+    }
+}
+
 float sword_rotate(hero_t *plyr, window_t *window, sfVector2i button_positions)
 {
     float a1 = 0.0;
@@ -56,6 +71,8 @@ static void create_hero(hero_t *cible)
     cible->spStam = sfSprite_create();
     cible->texMan = sfTexture_createFromFile("sprite/hero_rpg/Mana.png", NULL);
     cible->spMan = sfSprite_create();
+    cible->spW = sfSprite_create();
+    cible->texW = sfTexture_createFromFile("sprite/arme/mob_sqlt-1.png", NULL);
 }
 
 static void set_hero(hero_t *cible)
@@ -63,6 +80,7 @@ static void set_hero(hero_t *cible)
     sfSprite_setTexture(cible->spHP, cible->texHP, sfTrue);
     sfSprite_setTexture(cible->spStam, cible->texStam, sfTrue);
     sfSprite_setTexture(cible->spMan, cible->texMan, sfTrue);
+    sfSprite_setTexture(cible->spW, cible->texW, sfTrue);
     sfSprite_setTextureRect(cible->spHP, cible->recHP);
     sfSprite_setTextureRect(cible->spStam, cible->recStam);
     sfSprite_setTextureRect(cible->spMan, cible->recMan);
@@ -93,6 +111,8 @@ static void bar(hero_t *cible)
     cible->recMan.width = 100;
     cible->recMan.height = 100;
     set_hero(cible);
+    sfSprite_setScale(cible->spW, scale);
+    sfSprite_setOrigin(cible->spW, (sfVector2f){100, 120});
 }
 
 static void init_rectange_shape(hero_t *hero)

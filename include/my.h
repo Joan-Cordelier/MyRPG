@@ -34,6 +34,8 @@
 hero_t *hero(char *file, int x, int y);
 void rotate_png(hero_t *plyr, window_t *window,
     sfVector2i button_positions, sfSprite *sword);
+void rotate_mob(hero_t *plyr, window_t *window,
+    hero_t *mob);
 int set_move(sfEvent event, window_t *window, hero_t *plyr);
 int move_player(int *x, int *y, int speed);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
@@ -53,12 +55,12 @@ sfSprite *change_arms(sfSprite *sword, char **arms,
     int *change);
 
 //csfml.c
-void move_rect(sfIntRect *rect, int offset, int max);
+void move_rect(sfIntRect *rect, int offset, int max, int i);
 
 //csfml2.c
 void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back);
-void moove_and_set(hero_t *plyr, sfEvent event, window_t *window);
-void move_anim(hero_t *cible);
+void moove_and_set(hero_t *plyr, sfEvent event, window_t *window, hero_t *mob);
+void move_anim(hero_t *cible, int n);
 
 //death.c
 void dead(hero_t *hero);
