@@ -9,5 +9,17 @@
 
 void colision(hero_t *mob, hero_t *plyr)
 {
-    return;
+    sfFloatRect rect_mob = sfRectangleShape_getGlobalBounds(mob->colision);
+    sfFloatRect rect_ply = sfRectangleShape_getGlobalBounds(plyr->colision);
+
+    if (sfFloatRect_intersects(&rect_mob, &rect_ply, NULL) == sfTrue) {
+        sfRectangleShape_setOutlineColor(plyr->colision, sfRed);
+        sfRectangleShape_setOutlineColor(mob->colision, sfRed);
+        plyr->player->life = plyr->player->life - DEGAT_MOB;
+        if (plyr->player->life <= 0)
+            return;
+    } else {
+        sfRectangleShape_setOutlineColor(plyr->colision, sfGreen);
+        sfRectangleShape_setOutlineColor(mob->colision, sfGreen);
+    }
 }
