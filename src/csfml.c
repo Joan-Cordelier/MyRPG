@@ -107,7 +107,7 @@ void my_rpg(window_t *window, hero_t *plyr,
     sfSprite *sword, sfEvent event)
 {
     hero_t *mob = hero("sprite/mob_boss/mob_sqlt.png", 150, 150);
-    sfSprite *back = fond("sprite/map.jpg", 3, 3);
+    sfSprite *back = fond("sprite/map.png", 3, 3);
     sfSprite *shoot = fond("sprite/fire_ball.png", 1, 1);
     char *arms[] = {"epee-3.png", "shotgun-1.png", NULL};
 
