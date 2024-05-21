@@ -18,7 +18,7 @@ HEADER	=	my.h
 
 TEST	=	uni_tests
 
-CFLAGS := -g3 -Wall -Wextra -Iinclude
+CFLAGS := -g3 -Wall -Wextra -I ./include
 
 CSFML := -lcsfml-graphics -lcsfml-audio
 

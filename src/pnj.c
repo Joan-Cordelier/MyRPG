@@ -12,7 +12,6 @@ void rotate_png(hero_t *plyr, window_t *window,
     sfVector2i button_positions, sfSprite *sword)
 {
     sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
-    //sfVector2i button_positions = mouse(window->window);
 
     if (button_positions.x > oriplyr.x) {
         sfSprite_setScale(plyr->sprite, (sfVector2f){-2, 2});
@@ -48,16 +47,39 @@ float sword_rotate(hero_t *plyr, window_t *window, sfVector2i button_positions)
     return t;
 }
 
+static void create_hero(hero_t *cible)
+{
+    cible->texHP = sfTexture_createFromFile("sprite/hero_rpg/HP.png", NULL);
+    cible->spHP = sfSprite_create();
+    cible->texStam = sfTexture_createFromFile(
+        "sprite/hero_rpg/Stamina.png", NULL);
+    cible->spStam = sfSprite_create();
+    cible->texMan = sfTexture_createFromFile("sprite/hero_rpg/Mana.png", NULL);
+    cible->spMan = sfSprite_create();
+}
+
+static void set_hero(hero_t *cible)
+{
+    sfSprite_setTexture(cible->spHP, cible->texHP, sfTrue);
+    sfSprite_setTexture(cible->spStam, cible->texStam, sfTrue);
+    sfSprite_setTexture(cible->spMan, cible->texMan, sfTrue);
+    sfSprite_setTextureRect(cible->spHP, cible->recHP);
+    sfSprite_setTextureRect(cible->spStam, cible->recStam);
+    sfSprite_setTextureRect(cible->spMan, cible->recMan);
+    sfSprite_setScale(cible->spHP, cible->scale);
+    sfSprite_setScale(cible->spStam, cible->scale);
+    sfSprite_setScale(cible->spMan, cible->scale);
+    sfSprite_setTexture(cible->sprite, cible->texture, sfTrue);
+    sfSprite_setTextureRect(cible->sprite, cible->rect);
+    sfSprite_setScale(cible->sprite, cible->scale);
+    sfSprite_setPosition(cible->sprite, cible->pos);
+}
+
 static void bar(hero_t *cible)
 {
     sfVector2f scale = {2, 2};
 
-    cible->texHP = sfTexture_createFromFile("sprite/hero_rpg/HP.png", NULL);
-    cible->spHP = sfSprite_create();
-    cible->texStam = sfTexture_createFromFile("sprite/hero_rpg/Stamina.png", NULL);
-    cible->spStam = sfSprite_create();
-    cible->texMan = sfTexture_createFromFile("sprite/hero_rpg/Mana.png", NULL);
-    cible->spMan = sfSprite_create();
+    create_hero(cible);
     cible->recHP.top = 0;
     cible->recHP.left = 0;
     cible->recHP.width = 100;
@@ -70,15 +92,7 @@ static void bar(hero_t *cible)
     cible->recMan.left = 0;
     cible->recMan.width = 100;
     cible->recMan.height = 100;
-    sfSprite_setTexture(cible->spHP, cible->texHP, sfTrue);
-    sfSprite_setTexture(cible->spStam, cible->texStam, sfTrue);
-    sfSprite_setTexture(cible->spMan, cible->texMan, sfTrue);
-    sfSprite_setTextureRect(cible->spHP, cible->recHP);
-    sfSprite_setTextureRect(cible->spStam, cible->recStam);
-    sfSprite_setTextureRect(cible->spMan, cible->recMan);
-    sfSprite_setScale(cible->spHP, cible->scale);
-    sfSprite_setScale(cible->spStam, cible->scale);
-    sfSprite_setScale(cible->spMan, cible->scale);
+    set_hero(cible);
 }
 
 hero_t *hero(char *file, int x, int y)
@@ -102,9 +116,8 @@ hero_t *hero(char *file, int x, int y)
     cible->anim = sfClock_create();
     init_player(cible);
     bar(cible);
-    sfSprite_setTexture(cible->sprite, cible->texture, sfTrue);
-    sfSprite_setTextureRect(cible->sprite, cible->rect);
-    sfSprite_setScale(cible->sprite, cible->scale);
-    sfSprite_setPosition(cible->sprite, cible->pos);
     return cible;
 }
+
+//line 15:
+//sfVector2i button_positions = mouse(window->window);

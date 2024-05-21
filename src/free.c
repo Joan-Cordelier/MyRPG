@@ -5,10 +5,9 @@
 ** free
 */
 
-#include "../include/my.h"
+#include "my.h"
 
-
-void my_destroy(hero_t *sfSprite)
+void my_destroy(hero_t *sprite)
 {
     sfClock_destroy(sprite->anim);
     sfClock_destroy(sprite->endspe);
@@ -34,6 +33,7 @@ void my_destroy_w(weapon_t *arme)
     sfTexture_destroy(arme->texture);
     sfSprite_destroy(arme->sprite);
 }
+
 void my_free(hero_t *sprite, weapon_t *arme)
 {
     my_destroy(sprite);
