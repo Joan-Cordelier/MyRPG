@@ -55,6 +55,7 @@ typedef struct window_s {
     unsigned int y;
     unsigned int frame;
     int speed;
+    int change;
     sfVector2i button_positions;
     sfVector2i pos;
     sfVector2i pos2;
@@ -78,13 +79,14 @@ typedef struct pencil_s {
     sfColor color;
 } pencil_t;
 
-typedef struct weapon_s {
+/* typedef struct weapon_s {
     int dega;
     int speed;
-} weapon_t;
+} weapon_t; */
 
 typedef struct stat_s {
     int life;
+    int end;
     int weap_hnd;
     int nb_fiol;
     int mana;
@@ -95,11 +97,22 @@ typedef struct stat_s {
 } stat_t;
 
 typedef struct hero_s {
+    sfClock *anim;
+    sfClock *endspe;
     sfTexture *texture;
     sfSprite *sprite;
+    sfTexture *texHP;
+    sfSprite *spHP;
+    sfTexture *texStam;
+    sfSprite *spStam;
+    sfTexture *texMan;
+    sfSprite *spMan;
     sfVector2f scale;
     sfVector2f pos;
     sfIntRect rect;
+    sfIntRect recHP;
+    sfIntRect recStam;
+    sfIntRect recMan;
     sfView *run;
     stat_t *player;
     float angle;

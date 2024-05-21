@@ -47,27 +47,27 @@ void move_rect2(sfIntRect *rect, int offset, int max)
     }
 }
 
-static void move_anim(sfClock *clock, hero_t *cible)
+static void move_anim(hero_t *cible)
 {
     sfTime clock_espl;
 
-    clock_espl = sfClock_getElapsedTime(clock);
+    clock_espl = sfClock_getElapsedTime(cible->anim);
     if (clock_espl.microseconds > 300000) {
         sfSprite_setTextureRect(cible->sprite, cible->rect);
         move_rect(&cible->rect, 140, 340);
-        sfClock_restart(clock);
+        sfClock_restart(cible->anim);
     }
 }
 
-static void move_anim2(sfClock *clock, hero_t *cible)
+static void move_anim2(hero_t *cible)
 {
     sfTime clock_espl;
 
-    clock_espl = sfClock_getElapsedTime(clock);
+    clock_espl = sfClock_getElapsedTime(cible->anim);
     if (clock_espl.microseconds > 300000) {
         sfSprite_setTextureRect(cible->sprite, cible->rect);
         move_rect2(&cible->rect, 150, 600);
-        sfClock_restart(clock);
+        sfClock_restart(cible->anim);
     }
 }
 
@@ -80,6 +80,9 @@ static void draw_sprite(window_t *window, hero_t *plyr,
     sfSprite_setPosition(plyr->sprite,
         (sfVector2f){plyr->posx, plyr->posy});
     sfSprite_setPosition(sword, (sfVector2f){plyr->posx, plyr->posy});
+    sfSprite_setPosition(plyr->spHP, (sfVector2f){plyr->posx - 50, plyr->posy - 190});
+    sfSprite_setPosition(plyr->spStam, (sfVector2f){plyr->posx - 50, plyr->posy - 180});
+    sfSprite_setPosition(plyr->spMan, (sfVector2f){plyr->posx - 50, plyr->posy - 170});
     plyr->angle = sword_rotate(plyr, window, button_positions);
     rotate_png(plyr, window, button_positions, sword);
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0)
@@ -117,10 +120,13 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back,
     sfRenderWindow_setView(window->window, plyr->run);
     sfRenderWindow_drawSprite(window->window, back, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->sprite, NULL);
+    sfRenderWindow_drawSprite(window->window, plyr->spHP, NULL);
+    sfRenderWindow_drawSprite(window->window, plyr->spStam, NULL);
+    sfRenderWindow_drawSprite(window->window, plyr->spMan, NULL);
     sfRenderWindow_drawSprite(window->window, sword, NULL);
 }
 
-static void enemie(hero_t *mob, hero_t *plyr, window_t *window, sfClock *anim)
+static void enemie(hero_t *mob, hero_t *plyr, window_t *window)
 {
     if (plyr->posx > mob->posx)
         mob->posx = mob->posx + 7;
@@ -130,21 +136,22 @@ static void enemie(hero_t *mob, hero_t *plyr, window_t *window, sfClock *anim)
         mob->posy = mob->posy + 7;
     if (plyr->posy < mob->posy)
         mob->posy = mob->posy - 7;
-    move_anim2(anim, mob);
+    move_anim2(mob);
     sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
+    sfSprite_setPosition(mob->spHP, (sfVector2f){mob->posx - 50, mob->posy - 190});
     sfRenderWindow_drawSprite(window->window, mob->sprite, NULL);
+    sfRenderWindow_drawSprite(window->window, mob->spHP, NULL);
 }
 
 void my_rpg(window_t *window, hero_t *plyr,
     sfSprite *sword, sfEvent event)
 {
-    sfClock *anim = sfClock_create();
     hero_t *mob = hero("sprite/mob_boss/mob_sqlt.png", 150, 150);
     sfSprite *back = fond("sprite/map.jpg", 3, 3);
     sfSprite *shoot = fond("sprite/fire_ball.png", 1, 1);
     char *arms[] = {"epee-3.png", "shotgun-1.png", NULL};
-    int change = 0;
 
+    window->change = 0;
     sfSprite_setOrigin(back, (sfVector2f){0, 0});
     plyr->run = sfView_create();
     sfView_setSize(plyr->run, (sfVector2f){1750, 1000});
@@ -153,15 +160,15 @@ void my_rpg(window_t *window, hero_t *plyr,
     sfView_zoom(plyr->run, 1);
     window->speed = 0;
     while (sfRenderWindow_isOpen(window->window)) {
-        sword = change_arms(sword, arms, &change);
+        sword = change_arms(sword, arms, &window->change);
         if (window->speed == 0)
             sfSprite_setPosition(shoot, (sfVector2f){plyr->posx, plyr->posy});
-        move_anim(anim, plyr);
-        set_move(back, window, plyr);
-        draw_sprite(window, plyr, sword, change);
+        move_anim(plyr);
+        set_move(event, window, plyr);
+        draw_sprite(window, plyr, sword, window->change);
         show_window(window, plyr, back, sword);
-        enemie(mob, plyr, window, anim);
-        shoot = poll_event(event, window, change, shoot);
+        enemie(mob, plyr, window);
+        shoot = poll_event(event, window, plyr, shoot);
         if (window->speed == 0)
             sfSprite_setRotation(shoot, plyr->angle);
         sfRenderWindow_display(window->window);
@@ -169,7 +176,6 @@ void my_rpg(window_t *window, hero_t *plyr,
     sfSprite_destroy(mob->sprite);
     sfSprite_destroy(shoot);
     sfSprite_destroy(back);
-    sfClock_destroy(anim);
 }
 
 void menu_prcp(window_t *window, char *file, sfEvent event)

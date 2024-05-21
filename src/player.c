@@ -12,6 +12,7 @@ void init_player(hero_t *player)
     player->player = malloc(sizeof(stat_t));
     player->player->life = LIFE;
     player->player->mana = MANA;
+    player->player->end = END;
     player->player->nb_fiol = NB_FIOL;
     player->player->weap_hnd = EPEE_1;
     player->player->lv_magie = 1;
@@ -23,22 +24,22 @@ void init_player(hero_t *player)
 void check_spe(int *x, int *y, int speed)
 {
     if (sfKeyboard_isKeyPressed(sfKeyZ) && sfKeyboard_isKeyPressed(sfKeyD) && 
-        *x <= 3000 && *y >= 0) {
+        *x <= 2800 && *y >= 200) {
         *y = *y - speed * 0.5;
         *x = *x + speed * 0.5;
     }
     if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyD) && 
-        *x <= 3000 && *y <= 3000) {
+        *x <= 2800 && *y <= 2800) {
         *y = *y + speed * 0.5;
         *x = *x + speed * 0.5;
     }
     if (sfKeyboard_isKeyPressed(sfKeyS) && sfKeyboard_isKeyPressed(sfKeyQ) && 
-        *x >= 0 && *y <= 3000) {
+        *x >= 200 && *y <= 2800) {
         *y = *y + speed * 0.5;
         *x = *x - speed * 0.5;
     }
     if (sfKeyboard_isKeyPressed(sfKeyQ) && sfKeyboard_isKeyPressed(sfKeyZ) && 
-        *x >= 0 && *y >= 0) {
+        *x >= 200 && *y >= 200) {
         *y = *y - speed * 0.5;
         *x = *x - speed * 0.5;
     }
@@ -47,30 +48,50 @@ void check_spe(int *x, int *y, int speed)
 int move_player(int *x, int *y, int speed)
 {
     check_spe(x, y, speed);
-    if (sfKeyboard_isKeyPressed(sfKeyQ) && *x >= 0) {
+    if (sfKeyboard_isKeyPressed(sfKeyQ) && *x >= 200) {
         *x = *x - speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyD) && *x <= 3000) {
+    if (sfKeyboard_isKeyPressed(sfKeyD) && *x <= 2800) {
         *x = *x + speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyZ) && *y >= 0) {
+    if (sfKeyboard_isKeyPressed(sfKeyZ) && *y >= 200) {
         *y = *y - speed;
         return 1;
     }
-    if (sfKeyboard_isKeyPressed(sfKeyS) && *y <= 3000) {
+    if (sfKeyboard_isKeyPressed(sfKeyS) && *y <= 2800) {
         *y = *y + speed;
         return 1;
     }
     return 0;
 }
 
-int set_move(sfSprite *back, window_t *window, hero_t *plyr)
+int set_move(sfEvent event, window_t *window, hero_t *plyr)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyA)) {
+    sfTime clock_espl;
+
+    clock_espl = sfClock_getElapsedTime(plyr->endspe);
+    printf("clock22 = %lld\n", clock_espl.microseconds);
+    printf("end = %d\n", plyr->player->end);
+    /* if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end >= 0) {
         move_player(&plyr->posx, &plyr->posy, 30);
+        plyr->player->end = plyr->player->end - 25;
+    } else */
+    /* while (sfRenderWindow_pollEvent(window->window, &event)) {
+        
+    } */
+    if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end > 0) {
+        sfClock_restart(plyr->endspe);
+        move_player(&plyr->posx, &plyr->posy, 50);
+        plyr->player->end = plyr->player->end - 10;
     } else
         move_player(&plyr->posx, &plyr->posy, 10);
+    if (clock_espl.microseconds > 2000000) {
+        plyr->player->end = END;
+        sfClock_restart(plyr->endspe);
+    }
+    plyr->recStam.width = plyr->player->end;
+    sfSprite_setTextureRect(plyr->spStam, plyr->recStam);
     return 0;
 }

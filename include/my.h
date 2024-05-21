@@ -13,7 +13,7 @@
 hero_t *hero(char *file, int x, int y);
 void rotate_png(hero_t *plyr, window_t *window,
     sfVector2i button_positions, sfSprite *sword);
-int set_move(sfSprite *back, window_t *window, hero_t *plyr);
+int set_move(sfEvent event, window_t *window, hero_t *plyr);
 int move_player(int *x, int *y, int speed);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
@@ -63,15 +63,16 @@ void set_color(pencil_t *pencil);
 option_t *add_button(char *image, sfVector2f pos, char *name, show_t s);
 float sword_rotate(hero_t *plyr, window_t *window,
     sfVector2i button_positions);
-sfSprite *poll_event(sfEvent event, window_t *window, int change, sfSprite *sword);
+sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr, sfSprite *sword);
 sfVector2i mouse(sfRenderWindow *window);
 sfSprite *fond(char *file, float x, float y);
 void init_player(hero_t *player);
 
 /*
-** stat
+** personage
 */
 #define LIFE 100
+#define END 100
 #define MANA 100
 #define MANA_REG 10 /*taux en pourcentage de régénération*/
 #define LIFE_REG 20 /*taux en pourcentage de régénération*/
