@@ -17,7 +17,7 @@ void colision(hero_t *mob, hero_t *plyr)
         sfRectangleShape_setOutlineColor(mob->colision, sfRed);
         plyr->player->life = plyr->player->life - DEGAT_MOB;
         if (plyr->player->life <= 0)
-            return;
+            dead(plyr);
     } else {
         sfRectangleShape_setOutlineColor(plyr->colision, sfGreen);
         sfRectangleShape_setOutlineColor(mob->colision, sfGreen);
