@@ -7,6 +7,38 @@
 
 #include "my.h"
 
+static void free_all(char **array, char *buffer)
+{
+    for (int i = 0; array[i] != NULL; i++)
+        free(array[i]);
+    free(array);
+    free(buffer);
+}
+
+int **array_to_int_array(char *buffer)
+{
+    char **array = my_str_to_word_array(buffer, " ,\n");
+    int **map = malloc(sizeof(int *) * 35);
+    int x = 0;
+    int y = 0;
+
+    for (int i = 0; i < 35; i++)
+        map[i] = malloc(sizeof(int) * 60);
+    for (int i = 0; i < 34; i++)
+        for (int j = 0; j < 60; j++)
+            map[i][j] = 0;
+    for (int i = 1; array[i] != NULL; i++) {
+        if (i % 60 == 0) {
+            x++;
+            y = 0;
+        }
+        map[x][y] = atoi(array[i]);
+        y++;
+    }
+    free_all(array, buffer);
+    return map;
+}
+
 void add_map(char *str, map_t **map)
 {
     map_t *new = malloc(sizeof(map_t));
@@ -22,15 +54,55 @@ void add_map(char *str, map_t **map)
     *map = new;
 }
 
+static int is_possible(int **txt_map, int x, int y)
+{
+    if (x - 1 < 0 || x + 1 >= 34 || y - 1 < 0 || y + 1 >= 60)
+        return 0;
+    if (txt_map[x - 1][y] == 1 || txt_map[x + 1][y] == 1 ||
+        txt_map[x][y - 1] == 1 || txt_map[x][y + 1] == 1 ||
+        txt_map[x + 1][y + 1] == 1 || txt_map[x - 1][y - 1] == 1)
+        return 0;
+    return 1;
+}
+
+void add_rectangle(rectangle_t **rectangle, int **txt_map, int x, int y)
+{
+    rectangle_t *new = NULL;
+
+    if (txt_map[x][y] == 1 || is_possible(txt_map, x, y) == 1)
+        return;
+    new = malloc(sizeof(rectangle_t));
+    new->prev = NULL;
+    new->rec = sfRectangleShape_create();
+    sfRectangleShape_setOrigin(new->rec, (sfVector2f){0, 0});
+    sfRectangleShape_setPosition(new->rec, (sfVector2f){y * 160, x* 160});
+    sfRectangleShape_setSize(new->rec, (sfVector2f){160, 160});
+    sfRectangleShape_setFillColor(new->rec, sfRed);
+    sfRectangleShape_setOutlineThickness(new->rec, 2);
+    sfRectangleShape_setOutlineColor(new->rec, sfGreen);
+    new->next = *rectangle;
+    if (new->next != NULL)
+        new->next->prev = new;
+    *rectangle = new;
+}
+
 static void init_cave(map_t *map)
 {
+    char *buffer = open_read("sprite/map/cave.txt");
+    int **txt_map = array_to_int_array(buffer);
+
     map->start_player = (sfVector2f){1515, 875};
     map->exit_player = sfRectangleShape_create();
-    sfRectangleShape_setOrigin(map->exit_player, (sfVector2f){8100, 1325});
-    sfRectangleShape_setSize(map->exit_player, (sfVector2f){350, 20});
+    sfRectangleShape_setOrigin(map->exit_player, (sfVector2f){50, 50});
+    sfRectangleShape_setPosition(map->exit_player, (sfVector2f){8100, 1325});
+    sfRectangleShape_setSize(map->exit_player, (sfVector2f){350, 160});
     sfRectangleShape_setFillColor(map->exit_player, sfTransparent);
     sfRectangleShape_setOutlineThickness(map->exit_player, 2);
     sfRectangleShape_setOutlineColor(map->exit_player, sfGreen);
+    map->rectangle = NULL;
+    for (int i = 0; i < 34; i++)
+        for (int j = 0; j < 60; j++)
+            add_rectangle(&map->rectangle, txt_map, i, j);
 }
 
 void init_maps(map_t *map)

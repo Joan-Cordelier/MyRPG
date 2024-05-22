@@ -56,8 +56,11 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back,
     sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);
 }
 
-static void set_and_draw(hero_t *mob, window_t *window, int set_draw)
+static void set_and_draw(hero_t *mob, window_t *window,
+    int set_draw, map_t *map)
 {
+    int i = 0;
+
     if (set_draw == SET) {
         sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
         sfSprite_setPosition(mob->spHP,
@@ -72,6 +75,15 @@ static void set_and_draw(hero_t *mob, window_t *window, int set_draw)
         sfRenderWindow_drawSprite(window->window, mob->spW, NULL);
         sfRenderWindow_drawSprite(window->window, mob->spHP, NULL);
         sfRenderWindow_drawRectangleShape(window->window, mob->colision, NULL);
+        sfRenderWindow_drawRectangleShape(window->window, map->exit_player, 0);
+        while (map->rectangle->prev != NULL)
+            map->rectangle = map->rectangle->prev;
+        while (map->rectangle->next != NULL) {
+            printf("%d\n", i);
+            i++;
+            sfRenderWindow_drawRectangleShape(window->window, map->rectangle->rec, NULL);
+            map->rectangle = map->rectangle->next;
+        }
     }
 }
 
@@ -86,11 +98,11 @@ static void enemie(hero_t *mob, hero_t *plyr, window_t *window, map_t *map)
     if (plyr->posy < mob->posy)
         mob->posy = mob->posy - 7;
     move_anim(mob, 2);
-    set_and_draw(mob, window, SET);
+    set_and_draw(mob, window, SET, map);
     colision(mob, plyr, map);
     mob->angle = sword_rotate(mob, (sfVector2i){plyr->posx, plyr->posy});
     rotate_mob(plyr, mob);
-    set_and_draw(mob, window, DRAW);
+    set_and_draw(mob, window, DRAW, map);
 }
 
 static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map,

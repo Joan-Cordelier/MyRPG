@@ -130,12 +130,19 @@ typedef struct hero_s {
     bool vie;
 } hero_t;
 
+typedef struct rectangle_s {
+    sfRectangleShape *rec;
+    struct rectangle_s *next;
+    struct rectangle_s *prev;
+} rectangle_t;
+
 typedef struct map_s {
     char *name;
     sfSprite *map;
     sfVector2f start_player;
     sfRectangleShape *exit_player;
     sfVector2f *start_mob;
+    struct rectangle_s *rectangle;
     struct map_s *next;
     struct map_s *prev;
 } map_t;

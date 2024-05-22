@@ -26,7 +26,7 @@ CSFML := -lcsfml-graphics -lcsfml-audio -lcsfml-window -lcsfml-system
 all: $(NAME)
 
 $(NAME):	${OBJ}
-	$(CC) -o $(NAME) ${OBJ} ${CSFML} -lm $(CFLAGS)
+	$(CC) -o $(NAME) ${OBJ} ${CSFML} -lm $(CFLAGS) -g3
 
 clean:
 	rm -f $(NAME)

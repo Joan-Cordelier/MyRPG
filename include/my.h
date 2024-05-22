@@ -60,6 +60,8 @@ sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr,
 
 //map_utils.c
 void init_map(map_t *map);
+char **my_str_to_word_array(char *str, char *end);
+char *open_read(const char *path);
 
 //player.c
 void init_player(hero_t *player);
