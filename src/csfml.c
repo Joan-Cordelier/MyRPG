@@ -154,9 +154,10 @@ void my_rpg(window_t *window, hero_t *plyr,
 
 void menu_prcp(window_t *window)
 {
-    hero_t *plyr = hero("sprite/hero_rpg/hero.png", 140, 140);
+    hero_t *plyr = init_hero("sprite/hero_rpg/hero.png", 140, 140, PLAYER);
     sfSprite *sword = fond("sprite/arme/epee-4.png", 1, 1);
-    hero_t *mob = hero("sprite/mob_boss/mob_sqlt.png", 150, 150);
+    hero_t *mob = init_hero("sprite/mob_boss/mob_sqlt.png", 150, 150,
+        SQUELETON);
 
     sfSprite_setOrigin(plyr->sprite, (sfVector2f){70, 70});
     window->change = 0;

@@ -10,6 +10,7 @@
 void init_player(hero_t *player)
 {
     player->player = malloc(sizeof(stat_t));
+    memset(player->player, 0, sizeof(stat_t));
     player->player->life = LIFE;
     player->player->mana = MANA;
     player->player->end = END;

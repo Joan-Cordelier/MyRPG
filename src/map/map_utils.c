@@ -42,6 +42,7 @@ void add_map(char *str, map_t **map)
 {
     map_t *new = malloc(sizeof(map_t));
 
+    memset(new, 0, sizeof(map_t));
     new->exit_player = NULL;
     new->map = fond(str, 5, 5);
     new->name = strdup(str);
@@ -83,6 +84,7 @@ void add_rectangle(rectangle_t **rectangle, int **txt_map, int x, int y)
     if (txt_map[x][y] == 1 || is_possible(txt_map, x, y) == 1)
         return;
     new = malloc(sizeof(rectangle_t));
+    memset(new, 0, sizeof(rectangle_t));
     new->prev = NULL;
     new->rec = sfRectangleShape_create();
     sfRectangleShape_setOrigin(new->rec, (sfVector2f){0, 0});
@@ -128,6 +130,7 @@ void init_map(map_t *map)
 {
     char *path[] = {"sprite/map/cave.png", NULL};
 
+    memset(map, 0, sizeof(map_t));
     for (int i = 0; path[i] != NULL; i++)
         add_map(path[i], &map);
     while (map != NULL) {

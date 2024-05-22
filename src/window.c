@@ -22,6 +22,7 @@ window_t *init_window(unsigned int x, unsigned int y, int frame, char *title)
 {
     window_t *window = malloc(sizeof(window_t));
 
+    memset(window, 0, sizeof(window_t));
     window->window = create_window(x, y, frame, title);
     window->frame = frame;
     window->x = x;

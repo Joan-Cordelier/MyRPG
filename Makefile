@@ -5,8 +5,9 @@
 ## MAKEFILE
 ##
 
-SRC	=	$(wildcard src/*.c)		\
-		$(wildcard src/map/*.c)	\
+SRC	=	$(wildcard src/*.c)				\
+		$(wildcard src/colision/*.c)	\
+		$(wildcard src/map/*.c)			\
 
 TESTSRC	=	$(wildcard src/put/*.c)			\
 			$(wildcard tests/put/*.c)	\

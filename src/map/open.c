@@ -21,6 +21,7 @@ char *open_read(const char *path)
     buffer = malloc(sizeof(char) * len);
     if (buffer == NULL)
         exit(84);
+    memset(buffer, 0, sizeof(char) * len);
     file = fopen(path, "r");
     res = fread(buffer, sizeof(char), len, file);
     if (res != len)

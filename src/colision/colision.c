@@ -20,7 +20,7 @@ int is_touching(int x, int y, int **txt_map)
         printf("ERROR: to small\n");
         return 1;
     }
-    if (txt_map[posy][posx] == 0) {
+    if (txt_map[posy][posx] != 1) {
         return 1;
     }
     return 0;

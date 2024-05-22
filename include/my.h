@@ -69,10 +69,15 @@ void init_player(hero_t *player);
 int set_move(hero_t *plyr, map_t *map);
 
 //pnj.c
-hero_t *hero(char *file, int x, int y);
+hero_t *init_hero(char *file, int x, int y, int status);
+
+//sword_rotate.c
 void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword);
 void rotate_mob(hero_t *plyr, hero_t *mob);
 float sword_rotate(hero_t *plyr, sfVector2i button_positions);
+
+//weapon.c
+void init_weapon(hero_t *hero);
 
 //window.c
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
