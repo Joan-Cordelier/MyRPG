@@ -35,6 +35,7 @@ int my_putstr(char const *str);
 
 //colision.c
 void colision(hero_t *mob, hero_t *plyr, map_t *map);
+int is_touching(int x, int y, int **txt_map);
 
 //csfml_utils.c
 sfVector2i mouse(sfRenderWindow *window);
@@ -48,14 +49,14 @@ void move_rect(sfIntRect *rect, int offset, int max, int i);
 
 //csfml2.c
 void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back);
-void moove_and_set(hero_t *plyr);
+void moove_and_set(hero_t *plyr, map_t *map);
 void move_anim(hero_t *cible, int n);
 
 //death.c
 void dead(hero_t *hero, map_t *map);
 
 //event.c
-sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr,
+sfSprite *poll_event(map_t *map, window_t *window, hero_t *plyr,
     sfSprite *sword);
 
 //map_utils.c
@@ -65,8 +66,7 @@ char *open_read(const char *path);
 
 //player.c
 void init_player(hero_t *player);
-int move_player(int *x, int *y, int speed);
-int set_move(hero_t *plyr);
+int set_move(hero_t *plyr, map_t *map);
 
 //pnj.c
 hero_t *hero(char *file, int x, int y);

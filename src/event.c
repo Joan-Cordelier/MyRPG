@@ -48,10 +48,11 @@ static void mouse_button_press(sfEvent event, window_t *window, hero_t *plyr,
     }
 }
 
-sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr,
+sfSprite *poll_event(map_t *map, window_t *window, hero_t *plyr,
     sfSprite *shoot)
 {
     sfVector2f shoot_positions = sfSprite_getPosition(shoot);
+    sfEvent event;
 
     while (sfRenderWindow_pollEvent(window->window, &event)) {
         if (event.type == sfEvtClosed) {

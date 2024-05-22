@@ -21,6 +21,11 @@ enum {
     DRAW
 };
 
+enum {
+    PLAYER,
+    SHOOT
+};
+
 typedef enum {
     SHOW,
     HIDE,
@@ -132,6 +137,7 @@ typedef struct hero_s {
 
 typedef struct rectangle_s {
     sfRectangleShape *rec;
+    int status;
     struct rectangle_s *next;
     struct rectangle_s *prev;
 } rectangle_t;
@@ -142,6 +148,7 @@ typedef struct map_s {
     sfVector2f start_player;
     sfRectangleShape *exit_player;
     sfVector2f *start_mob;
+    int **txt_map;
     struct rectangle_s *rectangle;
     struct map_s *next;
     struct map_s *prev;

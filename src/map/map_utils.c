@@ -7,12 +7,11 @@
 
 #include "my.h"
 
-static void free_all(char **array, char *buffer)
+static void free_all(char **array)
 {
     for (int i = 0; array[i] != NULL; i++)
         free(array[i]);
     free(array);
-    free(buffer);
 }
 
 int **array_to_int_array(char *buffer)
@@ -35,7 +34,7 @@ int **array_to_int_array(char *buffer)
         map[x][y] = atoi(array[i]);
         y++;
     }
-    free_all(array, buffer);
+    free_all(array);
     return map;
 }
 
@@ -43,11 +42,15 @@ void add_map(char *str, map_t **map)
 {
     map_t *new = malloc(sizeof(map_t));
 
-    new->prev = NULL;
-    new->name = strdup(str);
-    new->start_player = (sfVector2f){0, 0};
+    new->exit_player = NULL;
     new->map = fond(str, 5, 5);
+    new->name = strdup(str);
+    new->next = NULL;
+    new->prev = NULL;
+    new->rectangle = NULL;
     new->start_mob = NULL;
+    new->start_player = (sfVector2f){0, 0};
+    new->txt_map = NULL;
     new->next = *map;
     if (new->next != NULL)
         new->next->prev = new;
@@ -60,9 +63,17 @@ static int is_possible(int **txt_map, int x, int y)
         return 0;
     if (txt_map[x - 1][y] == 1 || txt_map[x + 1][y] == 1 ||
         txt_map[x][y - 1] == 1 || txt_map[x][y + 1] == 1 ||
-        txt_map[x + 1][y + 1] == 1 || txt_map[x - 1][y - 1] == 1)
+        txt_map[x + 1][y + 1] == 1 || txt_map[x - 1][y - 1] == 1 ||
+        txt_map[x - 1][y + 1] == 1 || txt_map[x + 1][y - 1] == 1)
         return 0;
     return 1;
+}
+
+static int get_status(int x, int y)
+{
+    if (x == 33 || x == 0 || y == 0 || y == 59)
+        return SHOOT;
+    return PLAYER;
 }
 
 void add_rectangle(rectangle_t **rectangle, int **txt_map, int x, int y)
@@ -77,9 +88,10 @@ void add_rectangle(rectangle_t **rectangle, int **txt_map, int x, int y)
     sfRectangleShape_setOrigin(new->rec, (sfVector2f){0, 0});
     sfRectangleShape_setPosition(new->rec, (sfVector2f){y * 160, x* 160});
     sfRectangleShape_setSize(new->rec, (sfVector2f){160, 160});
-    sfRectangleShape_setFillColor(new->rec, sfRed);
     sfRectangleShape_setOutlineThickness(new->rec, 2);
     sfRectangleShape_setOutlineColor(new->rec, sfGreen);
+    sfRectangleShape_setFillColor(new->rec, sfTransparent);
+    new->status = get_status(x, y);
     new->next = *rectangle;
     if (new->next != NULL)
         new->next->prev = new;
@@ -92,6 +104,7 @@ static void init_cave(map_t *map)
     int **txt_map = array_to_int_array(buffer);
 
     map->start_player = (sfVector2f){1515, 875};
+    map->txt_map = array_to_int_array(buffer);
     map->exit_player = sfRectangleShape_create();
     sfRectangleShape_setOrigin(map->exit_player, (sfVector2f){50, 50});
     sfRectangleShape_setPosition(map->exit_player, (sfVector2f){8100, 1325});
