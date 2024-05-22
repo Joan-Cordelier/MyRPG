@@ -56,20 +56,11 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back,
     sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);
 }
 
-static void set_and_draw(hero_t *mob, window_t *window,
+static void draw_coll(hero_t *mob, window_t *window,
     int set_draw, map_t *map)
 {
     int i = 0;
 
-    if (set_draw == SET) {
-        sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
-        sfSprite_setPosition(mob->spHP,
-            (sfVector2f){mob->posx - 50, mob->posy - 190});
-        sfSprite_setPosition(mob->spW,
-            (sfVector2f){mob->posx, mob->posy + 10});
-        sfRectangleShape_setPosition(mob->colision,
-            (sfVector2f){mob->posx, mob->posy});
-    }
     if (set_draw == DRAW) {
         sfRenderWindow_drawSprite(window->window, mob->sprite, NULL);
         sfRenderWindow_drawSprite(window->window, mob->spW, NULL);
@@ -81,10 +72,26 @@ static void set_and_draw(hero_t *mob, window_t *window,
         while (map->rectangle->next != NULL) {
             printf("%d\n", i);
             i++;
-            sfRenderWindow_drawRectangleShape(window->window, map->rectangle->rec, NULL);
+            sfRenderWindow_drawRectangleShape(window->window,
+                map->rectangle->rec, NULL);
             map->rectangle = map->rectangle->next;
         }
     }
+}
+
+static void set_and_draw(hero_t *mob, window_t *window,
+    int set_draw, map_t *map)
+{
+    if (set_draw == SET) {
+        sfSprite_setPosition(mob->sprite, (sfVector2f){mob->posx, mob->posy});
+        sfSprite_setPosition(mob->spHP,
+            (sfVector2f){mob->posx - 50, mob->posy - 190});
+        sfSprite_setPosition(mob->spW,
+            (sfVector2f){mob->posx, mob->posy + 10});
+        sfRectangleShape_setPosition(mob->colision,
+            (sfVector2f){mob->posx, mob->posy});
+    }
+    draw_coll(mob, window, DRAW, map);
 }
 
 static void enemie(hero_t *mob, hero_t *plyr, window_t *window, map_t *map)
@@ -120,6 +127,15 @@ static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map,
     mob->posy = map->start_player.y;
 }
 
+map_t *map_check(map_t *map, hero_t *plyr, hero_t *mob, sfSprite *shoot)
+{
+    init_map(map);
+    while (map->prev != NULL)
+        map = map->prev;
+    set_mob_back_shoot(mob, plyr, map, shoot);
+    return map;
+}
+
 void my_rpg(window_t *window, hero_t *plyr,
     sfSprite *sword, hero_t *mob)
 {
@@ -128,10 +144,7 @@ void my_rpg(window_t *window, hero_t *plyr,
     char *arms[] = {"epee-3.png", "shotgun-1.png", NULL};
     sfEvent event;
 
-    init_map(map);
-    while (map->prev != NULL)
-        map = map->prev;
-    set_mob_back_shoot(mob, plyr, map, shoot);
+    map = map_check(map, plyr, mob, shoot);
     while (sfRenderWindow_isOpen(window->window)) {
         sword = change_arms(sword, arms, &window->change);
         if (window->speed == 0)

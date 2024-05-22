@@ -63,8 +63,8 @@ sfSprite *poll_event(sfEvent event, window_t *window, hero_t *plyr,
     }
     if (window->speed > 0) {
         shoot_gun(shoot_positions, window, shoot);
-        if (shoot_positions.x >= 2800 || shoot_positions.x <= 200 ||
-            shoot_positions.y >= 2800 || shoot_positions.y <= 200) {
+        if (shoot_positions.x >= 5760 || shoot_positions.x <= 0 ||
+            shoot_positions.y >= 3240 || shoot_positions.y <= 0) {
             window->speed = 0;
         }
         sfRenderWindow_drawSprite(window->window, shoot, NULL);
