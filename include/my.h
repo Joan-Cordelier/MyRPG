@@ -94,5 +94,6 @@ void init_weapon(hero_t *hero);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
 window_t *init_window(unsigned int x, unsigned int y, int frame, char *title);
+void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon);
 
 #endif

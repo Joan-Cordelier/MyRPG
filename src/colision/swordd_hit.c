@@ -7,7 +7,7 @@
 
 #include "my.h"
 
-static void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon)
+void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon)
 {
     mob->player->life = mob->player->life - weapon->damage;
     if (mob->player->life <= 0 && mob->status == PLAYER)
