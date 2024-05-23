@@ -119,7 +119,7 @@ typedef struct map_s {
     sfSprite *map;
     sfVector2f start_player;
     sfRectangleShape *exit_player;
-    sfVector2f *start_mob;
+    sfVector2f start_mob;
     int **txt_map;
     struct rectangle_s *rectangle;
     struct map_s *next;

@@ -61,15 +61,15 @@ static void change_arms(window_t *window, hero_t *plyr)
     }
 }
 
-void poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window)
+void poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window,
+    hero_t *mob)
 {
     if ((plyr->weapon->status == GUN || plyr->weapon->status == SPELL) &&
         window->speed > 0) {
         shoot_gun(shoot_positions, window, plyr);
-        if (shoot_positions.x >= 5760 || shoot_positions.x <= 0 ||
-            shoot_positions.y >= 3240 || shoot_positions.y <= 0) {
+        if (is_touching_border(shoot_positions.x, shoot_positions.y) == 1 ||
+            colisioin_box_mob(plyr->weapon->colision_b, mob) == 1)
             window->speed = 0;
-        }
         sfRenderWindow_drawSprite(window->window, plyr->weapon->bullet, NULL);
         sfRenderWindow_drawRectangleShape(window->window,
             plyr->weapon->colision_b, NULL);
@@ -81,7 +81,7 @@ void poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window)
     }
 }
 
-void poll_event(map_t *map, window_t *window, hero_t *plyr)
+void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
 {
     sfEvent event;
     sfVector2f shoot_positions;
@@ -101,5 +101,5 @@ void poll_event(map_t *map, window_t *window, hero_t *plyr)
         if (event.type == sfEvtMouseButtonPressed)
             mouse_button_press(event, window, plyr);
     }
-    poll_event2(shoot_positions, plyr, window);
+    poll_event2(shoot_positions, plyr, window, mob);
 }

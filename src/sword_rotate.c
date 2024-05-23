@@ -7,27 +7,22 @@
 
 #include "my.h"
 
-void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword,
-    int change)
+void rotate_png(hero_t *plyr, sfVector2i button_positions)
 {
     sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
 
     if (button_positions.x > oriplyr.x) {
         sfSprite_setScale(plyr->sprite, (sfVector2f){-2, 2});
-        sfSprite_setScale(sword, (sfVector2f){1, 1});
+        sfSprite_setScale(plyr->weapon->weapon, (sfVector2f){1, 1});
         sfRectangleShape_setScale(plyr->weapon->colision_w,
             (sfVector2f){1, 1});
     } else {
         sfSprite_setScale(plyr->sprite, (sfVector2f){2, 2});
-        sfSprite_setScale(sword, (sfVector2f){-1, 1});
+        sfSprite_setScale(plyr->weapon->weapon, (sfVector2f){-1, 1});
         sfRectangleShape_setScale(plyr->weapon->colision_w,
             (sfVector2f){-1, 1});
         plyr->angle = plyr->angle * -1;
     }
-    if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0)
-        plyr->angle = plyr->angle - 90.0;
-    sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
-    sfRectangleShape_setRotation(plyr->weapon->colision_w, plyr->angle);
 }
 
 void rotate_mob(hero_t *plyr, hero_t *mob)

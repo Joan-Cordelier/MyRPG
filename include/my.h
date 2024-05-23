@@ -36,6 +36,10 @@ int my_putstr(char const *str);
 //colision.c
 void colision(hero_t *mob, hero_t *plyr, map_t *map);
 int is_touching(int x, int y, int **txt_map);
+int is_touching_border(int x, int y);
+
+//colision_box.c
+int colisioin_box_mob(sfRectangleShape *box, hero_t *mob);
 
 //csfml_utils.c
 sfVector2i mouse(sfRenderWindow *window);
@@ -54,12 +58,15 @@ void move_anim(hero_t *cible, int n);
 void dead(hero_t *hero, map_t *map);
 
 //event.c
-void poll_event(map_t *map, window_t *window, hero_t *plyr);
+void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob);
 
 //map_utils.c
 void init_map(map_t *map);
 char **my_str_to_word_array(char *str, char *end);
 char *open_read(const char *path);
+
+//mooves_mobs.c
+void moove_squeleton(hero_t *plyr, hero_t *mob, map_t *map);
 
 //player.c
 void init_player(hero_t *player);
@@ -68,9 +75,11 @@ int set_move(hero_t *plyr, map_t *map);
 //pnj.c
 hero_t *init_hero(char *file, int x, int y, int status);
 
+//sword_hit.c
+void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change);
+
 //sword_rotate.c
-void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword,
-    int change);
+void rotate_png(hero_t *plyr, sfVector2i button_positions);
 void rotate_mob(hero_t *plyr, hero_t *mob);
 float sword_rotate(hero_t *plyr, sfVector2i button_positions);
 

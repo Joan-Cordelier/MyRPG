@@ -18,7 +18,8 @@ void move_rect(sfIntRect *rect, int offset, int max, int i)
     }
 }
 
-static void draw_sprite(window_t *window, hero_t *plyr, int change)
+static void draw_sprite(window_t *window, hero_t *plyr, map_t *map,
+    hero_t *mob)
 {
     sfVector2i button_positions = mouse(window->window);
     sfVector2f pos = {plyr->posx, plyr->posy};
@@ -35,7 +36,8 @@ static void draw_sprite(window_t *window, hero_t *plyr, int change)
     sfRectangleShape_setPosition(plyr->colision, pos);
     sfRectangleShape_setPosition(plyr->weapon->colision_w, pos);
     plyr->angle = sword_rotate(plyr, button_positions);
-    rotate_png(plyr, button_positions, plyr->weapon->weapon, change);
+    rotate_png(plyr, button_positions);
+    sword_hit(plyr, mob, map, window->change);
     sfRenderWindow_clear(window->window, sfBlack);
 }
 
@@ -86,14 +88,7 @@ static void set_ennemie(hero_t *mob, window_t *window, map_t *map)
 
 static void enemie(hero_t *mob, hero_t *plyr, window_t *window, map_t *map)
 {
-    if (plyr->posx > mob->posx)
-        mob->posx = mob->posx + 7;
-    if (plyr->posx < mob->posx)
-        mob->posx = mob->posx - 7;
-    if (plyr->posy > mob->posy)
-        mob->posy = mob->posy + 7;
-    if (plyr->posy < mob->posy)
-        mob->posy = mob->posy - 7;
+    moove_squeleton(plyr, mob, map);
     move_anim(mob, 2);
     set_ennemie(mob, window, map);
     colision(mob, plyr, map);
@@ -111,8 +106,8 @@ static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map)
     sfView_zoom(plyr->run, 1);
     plyr->posx = map->start_player.x;
     plyr->posy = map->start_player.y;
-    mob->posx = map->start_player.x;
-    mob->posy = map->start_player.y;
+    mob->posx = map->start_mob.x;
+    mob->posy = map->start_mob.y;
 }
 
 map_t *map_check(map_t *map, hero_t *plyr, hero_t *mob)
@@ -131,10 +126,10 @@ void my_rpg(window_t *window, hero_t *plyr, hero_t *mob)
     map = map_check(map, plyr, mob);
     while (sfRenderWindow_isOpen(window->window)) {
         moove_and_set(plyr, map);
-        draw_sprite(window, plyr, window->change);
+        draw_sprite(window, plyr, map, mob);
         show_window(window, plyr, map->map);
         enemie(mob, plyr, window, map);
-        poll_event(map, window, plyr);
+        poll_event(map, window, plyr, mob);
         sfRenderWindow_display(window->window);
     }
     destroy_sprites(mob->sprite, map->map);

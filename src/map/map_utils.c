@@ -49,7 +49,7 @@ void add_map(char *str, map_t **map)
     new->next = NULL;
     new->prev = NULL;
     new->rectangle = NULL;
-    new->start_mob = NULL;
+    new->start_mob = (sfVector2f){0, 0};
     new->start_player = (sfVector2f){0, 0};
     new->txt_map = NULL;
     new->next = *map;
@@ -106,6 +106,7 @@ static void init_cave(map_t *map)
     int **txt_map = array_to_int_array(buffer);
 
     map->start_player = (sfVector2f){1515, 875};
+    map->start_mob = (sfVector2f){4300, 3000};
     map->txt_map = array_to_int_array(buffer);
     map->exit_player = sfRectangleShape_create();
     sfRectangleShape_setOrigin(map->exit_player, (sfVector2f){50, 50});
