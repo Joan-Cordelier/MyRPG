@@ -64,6 +64,7 @@ static void draw_ennemie(hero_t *mob, window_t *window, map_t *map)
     sfRenderWindow_drawRectangleShape(window->window,
         mob->weapon->colision_w, NULL);
     sfRenderWindow_drawRectangleShape(window->window, map->exit_player, NULL);
+    sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
     while (map->rectangle->prev != NULL)
         map->rectangle = map->rectangle->prev;
     for (; map->rectangle->next != NULL; map->rectangle = map->rectangle->next)

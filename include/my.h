@@ -61,6 +61,9 @@ void dead_mob(hero_t *hero, map_t *map);
 //event.c
 void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob);
 
+//init_pnj.c
+void init_pnj_cave(map_t *map);
+
 //map_utils.c
 void init_map(map_t *map);
 char **my_str_to_word_array(char *str, char *end);

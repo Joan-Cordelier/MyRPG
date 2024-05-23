@@ -119,6 +119,14 @@ typedef struct rectangle_s {
     struct rectangle_s *prev;
 } rectangle_t;
 
+typedef struct pnj_s {
+    sfSprite *pnj;
+    sfTexture *pnj_texture;
+    int posx;
+    int posy;
+    int status;
+} pnj_t;
+
 typedef struct map_s {
     char *name;
     sfSprite *map;
@@ -127,6 +135,7 @@ typedef struct map_s {
     sfVector2f start_mob;
     int **txt_map;
     struct rectangle_s *rectangle;
+    struct pnj_s *pnj;
     struct map_s *next;
     struct map_s *prev;
 } map_t;

@@ -119,6 +119,7 @@ static void init_cave(map_t *map)
     for (int i = 0; i < 34; i++)
         for (int j = 0; j < 60; j++)
             add_rectangle(&map->rectangle, txt_map, i, j);
+    init_pnj_cave(map);
 }
 
 void init_maps(map_t *map)
