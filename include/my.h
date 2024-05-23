@@ -37,6 +37,7 @@ int my_putstr(char const *str);
 void colision(hero_t *mob, hero_t *plyr, map_t *map);
 int is_touching(int x, int y, int **txt_map);
 int is_touching_border(int x, int y);
+map_t *map_colision(window_t *window, hero_t *plyr, map_t *map, hero_t *mob);
 
 //colision_box.c
 int colisioin_box_mob(sfRectangleShape *box, hero_t *mob);
@@ -48,6 +49,7 @@ sfSprite *fond(char *file, float x, float y);
 //csfml.c
 void menu_prcp(window_t *window);
 void move_rect(sfIntRect *rect, int offset, int max, int i);
+void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map);
 
 //csfml2.c
 void destroy_sprites(sfSprite *mob, sfSprite *back);

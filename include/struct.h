@@ -112,13 +112,6 @@ typedef struct hero_s {
     int status;
 } hero_t;
 
-typedef struct rectangle_s {
-    sfRectangleShape *rec;
-    int status;
-    struct rectangle_s *next;
-    struct rectangle_s *prev;
-} rectangle_t;
-
 typedef struct pnj_s {
     sfSprite *pnj;
     sfTexture *pnj_texture;
@@ -131,10 +124,12 @@ typedef struct map_s {
     char *name;
     sfSprite *map;
     sfVector2f start_player;
-    sfRectangleShape *exit_player;
+    sfRectangleShape *exit_player_next;
+    int is_next;
+    sfRectangleShape *exit_player_prev;
+    int is_prev;
     sfVector2f start_mob;
     int **txt_map;
-    struct rectangle_s *rectangle;
     struct pnj_s *pnj;
     struct map_s *next;
     struct map_s *prev;

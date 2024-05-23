@@ -40,6 +40,70 @@ int is_touching_border(int x, int y)
     return 0;
 }
 
+int map_colision_2(sfRectangleShape *exit, hero_t *plyr, map_t *map,
+    hero_t *mob)
+{
+    sfFloatRect rect_ply = sfRectangleShape_getGlobalBounds(plyr->colision);
+    sfFloatRect rect_exit = sfRectangleShape_getGlobalBounds(exit);
+
+    if (sfFloatRect_intersects(&rect_exit, &rect_ply, NULL) == sfTrue) {
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+            sfRectangleShape_setOutlineColor(plyr->colision, sfRed);
+            sfRectangleShape_setOutlineColor(exit, sfRed);
+            return 1;
+        }
+    } else {
+        sfRectangleShape_setOutlineColor(plyr->colision, sfGreen);
+        sfRectangleShape_setOutlineColor(exit, sfGreen);
+        return 0;
+    }
+}
+
+static void set_new_map_new(window_t *window, hero_t *plyr, map_t *map,
+    hero_t *mob)
+{
+    set_mob_back_shoot(mob, plyr, map);
+    if (map->is_next)
+        sfRenderWindow_drawRectangleShape(window->window,
+            map->exit_player_next, NULL);
+    if (map->is_prev)
+        sfRenderWindow_drawRectangleShape(window->window,
+            map->exit_player_prev, NULL);
+    sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
+    sfRenderWindow_drawSprite(window->window, map->map, NULL);
+}
+
+static void set_new_map_prev(window_t *window, hero_t *plyr, map_t *map,
+    hero_t *mob)
+{
+    set_mob_back_shoot(mob, plyr, map);
+    if (map->is_next)
+        sfRenderWindow_drawRectangleShape(window->window,
+            map->exit_player_next, NULL);
+    if (map->is_prev)
+        sfRenderWindow_drawRectangleShape(window->window,
+            map->exit_player_prev, NULL);
+    sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
+    sfRenderWindow_drawSprite(window->window, map->map, NULL);
+}
+
+map_t *map_colision(window_t *window, hero_t *plyr, map_t *map, hero_t *mob)
+{
+    if (map->is_next) {
+        if (map_colision_2(map->exit_player_next, plyr, map, mob) == 1) {
+            map = map->prev;
+            set_new_map_new(window, plyr, map, mob);
+        }
+    }
+    if (map->is_prev) {
+        if (map_colision_2(map->exit_player_prev, plyr, map, mob) == 1) {
+            map = map->next;
+            set_new_map_prev(window, plyr, map, mob);
+        }
+    }
+    return map;
+}
+
 void colision(hero_t *mob, hero_t *plyr, map_t *map)
 {
     sfFloatRect rect_mob = sfRectangleShape_getGlobalBounds(mob->colision);

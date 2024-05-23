@@ -63,14 +63,13 @@ static void draw_ennemie(hero_t *mob, window_t *window, map_t *map)
     sfRenderWindow_drawRectangleShape(window->window, mob->colision, NULL);
     sfRenderWindow_drawRectangleShape(window->window,
         mob->weapon->colision_w, NULL);
-    sfRenderWindow_drawRectangleShape(window->window, map->exit_player, NULL);
+    if (map->is_next)
+        sfRenderWindow_drawRectangleShape(window->window,
+            map->exit_player_next, NULL);
+    if (map->is_prev)
+        sfRenderWindow_drawRectangleShape(window->window,
+            map->exit_player_prev, NULL);
     sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
-    while (map->rectangle->prev != NULL)
-        map->rectangle = map->rectangle->prev;
-    for (; map->rectangle->next != NULL; map->rectangle = map->rectangle->next)
-        if (map->rectangle->status == SHOOT)
-            sfRenderWindow_drawRectangleShape(window->window,
-                map->rectangle->rec, NULL);
 }
 
 static void set_ennemie(hero_t *mob, window_t *window, map_t *map)
@@ -98,7 +97,7 @@ static void enemie(hero_t *mob, hero_t *plyr, window_t *window, map_t *map)
     draw_ennemie(mob, window, map);
 }
 
-static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map)
+void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map)
 {
     sfSprite_setOrigin(map->map, (sfVector2f){0, 0});
     plyr->run = sfView_create();
@@ -111,11 +110,10 @@ static void set_mob_back_shoot(hero_t *mob, hero_t *plyr, map_t *map)
     mob->posy = map->start_mob.y;
 }
 
-map_t *map_check(map_t *map, hero_t *plyr, hero_t *mob)
+static map_t *map_check(map_t *map, hero_t *plyr, hero_t *mob)
 {
     init_map(map);
-    while (map->prev != NULL)
-        map = map->prev;
+    map = map->prev;
     set_mob_back_shoot(mob, plyr, map);
     return map;
 }
@@ -127,6 +125,7 @@ void my_rpg(window_t *window, hero_t *plyr, hero_t *mob)
     map = map_check(map, plyr, mob);
     while (sfRenderWindow_isOpen(window->window)) {
         moove_and_set(plyr, map);
+        map = map_colision(window, plyr, map, mob);
         draw_sprite(window, plyr, map, mob);
         show_window(window, plyr, map->map);
         enemie(mob, plyr, window, map);
