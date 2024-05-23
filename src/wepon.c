@@ -31,8 +31,8 @@ static void create_bullet(weapon_t *new, char *file)
         new->bullet_texture = sfTexture_createFromFile(file, NULL);
     new->bullet = sfSprite_create();
     new->colision_b = sfRectangleShape_create();
-    sfRectangleShape_setOrigin(new->colision_b, (sfVector2f){32, 32});
-    sfRectangleShape_setSize(new->colision_b, (sfVector2f){32, 32});
+    sfRectangleShape_setOrigin(new->colision_b, (sfVector2f){22, 18});
+    sfRectangleShape_setSize(new->colision_b, (sfVector2f){50, 50});
     sfRectangleShape_setOutlineThickness(new->colision_b, 2);
     sfRectangleShape_setOutlineColor(new->colision_b, sfGreen);
     sfRectangleShape_setFillColor(new->colision_b, sfTransparent);

@@ -16,6 +16,8 @@ static void shoot_gun(sfVector2f shoot_positions, window_t *window,
     shoot_positions.y = shoot_positions.y + window->button_positions.y;
     sfSprite_setPosition(plyr->weapon->bullet,
         (sfVector2f){shoot_positions.x, shoot_positions.y});
+    sfRectangleShape_setPosition(plyr->weapon->colision_b,
+        (sfVector2f){shoot_positions.x, shoot_positions.y});
 }
 
 static sfVector2i attack(int change, window_t *window, hero_t *plyr)
@@ -69,10 +71,14 @@ void poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window)
             window->speed = 0;
         }
         sfRenderWindow_drawSprite(window->window, plyr->weapon->bullet, NULL);
+        sfRenderWindow_drawRectangleShape(window->window,
+            plyr->weapon->colision_b, NULL);
     }
     if ((plyr->weapon->status == GUN || plyr->weapon->status == SPELL) &&
-        window->speed == 0)
+        window->speed == 0) {
         sfSprite_setRotation(plyr->weapon->bullet, plyr->angle);
+        sfRectangleShape_setRotation(plyr->weapon->colision_b, plyr->angle);
+    }
 }
 
 void poll_event(map_t *map, window_t *window, hero_t *plyr)
