@@ -20,13 +20,16 @@ static void create_weapon(weapon_t *new, char *file)
     sfSprite_setTexture(new->weapon, new->weapon_texture, sfTrue);
     sfSprite_setScale(new->weapon, (sfVector2f){1, 1});
     sfSprite_setOrigin(new->weapon, (sfVector2f){100, 150});
+    new->damage = 20;
 }
 
 static void create_bullet(weapon_t *new, char *file)
 {
-    if (new->status == GUN)
+    if (new->status == GUN) {
         new->bullet_texture = sfTexture_createFromFile("sprite/fire_ball.png",
             NULL);
+        new->damage = 50;
+    }
     else
         new->bullet_texture = sfTexture_createFromFile(file, NULL);
     new->bullet = sfSprite_create();

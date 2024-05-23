@@ -7,15 +7,22 @@
 
 #include "my.h"
 
-static void aply_change_hit(hero_t *mob, map_t *map)
+static void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon)
 {
+    mob->player->life = mob->player->life - weapon->damage;
+    if (mob->player->life <= 0 && mob->status == PLAYER)
+        dead_hero(mob, map);
+    if (mob->player->life <= 0 && mob->status == SQUELETON)
+        dead_mob(mob, map);
+    mob->recHP.width = mob->recHP.width - weapon->damage;
+    sfSprite_setTextureRect(mob->spHP, mob->recHP);
 }
 
 void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change)
 {
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0) {
         if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1)
-            aply_change_hit(mob, map);
+            aply_change_hit(mob, map, plyr->weapon);
         plyr->angle = plyr->angle - 90.0;
     }
     sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);

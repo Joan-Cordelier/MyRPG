@@ -58,7 +58,7 @@ typedef struct weapon_s {
     sfRectangleShape *colision_b;
     sfTexture *bullet_texture;
     sfSprite *bullet;
-    int dega;
+    int damage;
     int speed;
     int status;
     struct weapon_s *prev;
