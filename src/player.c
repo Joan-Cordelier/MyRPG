@@ -105,12 +105,3 @@ int set_move(hero_t *plyr, map_t *map)
     sfSprite_setTextureRect(plyr->spStam, plyr->recStam);
     return 0;
 }
-
-//was line 77
-
-/* if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end >= 0) {
-    move_player(&plyr->posx, &plyr->posy, 30);
-    plyr->player->end = plyr->player->end - 25;
-} else */
-/* while (sfRenderWindow_pollEvent(window->window, &event)) {
-} */

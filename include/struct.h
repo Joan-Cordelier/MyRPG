@@ -20,6 +20,12 @@ enum {
 };
 
 typedef enum {
+    SWORD,
+    GUN,
+    SPELL
+} weapon_status_t;
+
+typedef enum {
     PLYR,
     SQUELETON,
     BOSS,
@@ -46,11 +52,17 @@ typedef struct window_s {
 } window_t;
 
 typedef struct weapon_s {
+    sfRectangleShape *colision_w;
+    sfTexture *weapon_texture;
+    sfSprite *weapon;
+    sfRectangleShape *colision_b;
+    sfTexture *bullet_texture;
+    sfSprite *bullet;
     int dega;
     int speed;
-    sfTexture *texture;
-    sfSprite *sprite;
-    sfRectangleShape *colision;
+    int status;
+    struct weapon_s *prev;
+    struct weapon_s *next;
 } weapon_t;
 
 typedef struct stat_s {
@@ -87,7 +99,7 @@ typedef struct hero_s {
     sfIntRect recMan;
     sfView *run;
     stat_t *player;
-    weapon_t *arme;
+    weapon_t *weapon;
     float angle;
     int viewx;
     int viewy;
