@@ -55,7 +55,8 @@ void moove_and_set(hero_t *plyr, map_t *map);
 void move_anim(hero_t *cible, int n);
 
 //death.c
-void dead(hero_t *hero, map_t *map);
+void dead_hero(hero_t *hero, map_t *map);
+void dead_mob(hero_t *hero, map_t *map);
 
 //event.c
 void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob);

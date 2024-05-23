@@ -50,7 +50,7 @@ void colision(hero_t *mob, hero_t *plyr, map_t *map)
         sfRectangleShape_setOutlineColor(mob->colision, sfRed);
         plyr->player->life = plyr->player->life - 0;
         if (plyr->player->life <= 0)
-            dead(plyr, map);
+            dead_hero(plyr, map);
         plyr->recHP.width = plyr->recHP.width - 0;
         sfSprite_setTextureRect(plyr->spHP, plyr->recHP);
     } else {
