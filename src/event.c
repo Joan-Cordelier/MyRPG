@@ -28,6 +28,7 @@ static sfVector2i attack(int change, window_t *window, hero_t *plyr)
     float y = 0;
 
     if (change == 1 && plyr->recMan.width > 0) {
+        sfSound_play(plyr->songG);
         plyr->recMan.width = plyr->recMan.width - 20;
         window->speed = 1;
     }
@@ -68,8 +69,9 @@ void poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window,
         window->speed > 0) {
         shoot_gun(shoot_positions, window, plyr);
         if (is_touching_border(shoot_positions.x, shoot_positions.y) == 1 ||
-            colisioin_box_mob(plyr->weapon->colision_b, mob) == 1)
+            colisioin_box_mob(plyr->weapon->colision_b, mob) == 1) {
             window->speed = 0;
+        }
         sfRenderWindow_drawSprite(window->window, plyr->weapon->bullet, NULL);
         sfRenderWindow_drawRectangleShape(window->window,
             plyr->weapon->colision_b, NULL);

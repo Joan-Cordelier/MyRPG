@@ -58,6 +58,8 @@ typedef struct weapon_s {
     sfRectangleShape *colision_b;
     sfTexture *bullet_texture;
     sfSprite *bullet;
+    sfSound *sounG;
+    sfSoundBuffer *sounG2;
     int damage;
     int speed;
     int status;
@@ -79,8 +81,11 @@ typedef struct stat_s {
 
 typedef struct hero_s {
     sfRectangleShape *colision;
+    sfSound *songG;
+    sfSoundBuffer *songG2;
     sfClock *anim;
     sfClock *endspe;
+    sfClock *spatt;
     sfTexture *texture;
     sfSprite *sprite;
     sfTexture *texHP;

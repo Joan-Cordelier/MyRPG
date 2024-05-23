@@ -29,8 +29,7 @@ static void create_bullet(weapon_t *new, char *file)
         new->bullet_texture = sfTexture_createFromFile("sprite/fire_ball.png",
             NULL);
         new->damage = 50;
-    }
-    else
+    } else
         new->bullet_texture = sfTexture_createFromFile(file, NULL);
     new->bullet = sfSprite_create();
     new->colision_b = sfRectangleShape_create();

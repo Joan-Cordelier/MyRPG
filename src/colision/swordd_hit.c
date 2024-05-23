@@ -20,9 +20,15 @@ static void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon)
 
 void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change)
 {
+    sfTime clock_espl;
+
+    clock_espl = sfClock_getElapsedTime(plyr->spatt);
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0) {
-        if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1)
+        if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1
+            && clock_espl.microseconds > 200000) {
             aply_change_hit(mob, map, plyr->weapon);
+            sfClock_restart(plyr->spatt);
+        }
         plyr->angle = plyr->angle - 90.0;
     }
     sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
