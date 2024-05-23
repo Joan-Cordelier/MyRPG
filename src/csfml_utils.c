@@ -26,25 +26,3 @@ sfSprite *fond(char *file, float x, float y)
     sfSprite_setScale(sprite, (sfVector2f){x, y});
     return sprite;
 }
-
-sfSprite *change_arms(sfSprite *sword, char **arms,
-    int *change)
-{
-    char *choise = NULL;
-    char *file = "sprite/arme/";
-    char *pop = NULL;
-
-    if (sfKeyboard_isKeyPressed(sfKeyR) && *change < 1)
-        *change = *change + 1;
-    if (sfKeyboard_isKeyPressed(sfKeyE) && *change > 0)
-        *change = *change - 1;
-    choise = strdup(arms[*change]);
-    pop = malloc(strlen(file) + strlen(choise) + 2);
-    pop = strcpy(pop, file);
-    pop = strcat(pop, choise);
-    sfSprite_destroy(sword);
-    sword = fond(pop, 1, 1);
-    sfSprite_setPosition(sword, (sfVector2f){900, 500});
-    sfSprite_setOrigin(sword, (sfVector2f){100, 150});
-    return sword;
-}

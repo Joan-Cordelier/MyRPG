@@ -7,13 +7,13 @@
 
 #include "my.h"
 
-static void create_sword(weapon_t *new, char *file)
+static void create_weapon(weapon_t *new, char *file)
 {
     new->weapon_texture = sfTexture_createFromFile(file, NULL);
     new->weapon = sfSprite_create();
     new->colision_w = sfRectangleShape_create();
-    sfRectangleShape_setOrigin(new->colision_w, (sfVector2f){0, 0});
-    sfRectangleShape_setSize(new->colision_w, (sfVector2f){160, 160});
+    sfRectangleShape_setOrigin(new->colision_w, (sfVector2f){30, 130});
+    sfRectangleShape_setSize(new->colision_w, (sfVector2f){60, 140});
     sfRectangleShape_setOutlineThickness(new->colision_w, 2);
     sfRectangleShape_setOutlineColor(new->colision_w, sfGreen);
     sfRectangleShape_setFillColor(new->colision_w, sfTransparent);
@@ -31,7 +31,7 @@ static void create_bullet(weapon_t *new, char *file)
         new->bullet_texture = sfTexture_createFromFile(file, NULL);
     new->bullet = sfSprite_create();
     new->colision_b = sfRectangleShape_create();
-    sfRectangleShape_setOrigin(new->colision_b, (sfVector2f){0, 0});
+    sfRectangleShape_setOrigin(new->colision_b, (sfVector2f){32, 32});
     sfRectangleShape_setSize(new->colision_b, (sfVector2f){32, 32});
     sfRectangleShape_setOutlineThickness(new->colision_b, 2);
     sfRectangleShape_setOutlineColor(new->colision_b, sfGreen);
@@ -48,8 +48,7 @@ void add_weapon(weapon_t **weapon, char *file, int status)
     memset(new, 0, sizeof(weapon_t));
     new->prev = NULL;
     new->status = status;
-    if (new->status == SWORD || new->status == GUN)
-        create_sword(new, file);
+    create_weapon(new, file);
     if (new->status == GUN || new->status == SPELL)
         create_bullet(new, file);
     new->next = *weapon;
@@ -60,21 +59,16 @@ void add_weapon(weapon_t **weapon, char *file, int status)
 
 void init_weapon(hero_t *hero)
 {
-    char *hero_weapon[] = {"sprite/arme/epee-1.png", "sprite/arme/shotgun-1",
-        "sprite/fire_ball.png", NULL};
+    char *hero_weapon[] = {"sprite/arme/epee-3.png",
+    "sprite/arme/shotgun-1.png", "sprite/fire_ball.png", NULL};
     char *squelet_weapon[] = {"sprite/arme/mob_sqlt-1.png", NULL};
 
-    hero->spW = sfSprite_create();
-    hero->texW = sfTexture_createFromFile("sprite/arme/mob_sqlt-1.png", NULL);
-    sfSprite_setTexture(hero->spW, hero->texW, sfTrue);
-    sfSprite_setScale(hero->spW, (sfVector2f){2, 2});
-    sfSprite_setOrigin(hero->spW, (sfVector2f){100, 120});
     if (hero->status == PNJ)
         return;
     if (hero->status == PLYR)
-        for (int i = 0; hero_weapon[i] == NULL; i++)
+        for (int i = 0; hero_weapon[i] != NULL; i++)
             add_weapon(&hero->weapon, hero_weapon[i], i);
     if (hero->status == SQUELETON)
-        for (int i = 0; hero_weapon[i] == NULL; i++)
+        for (int i = 0; squelet_weapon[i] != NULL; i++)
             add_weapon(&hero->weapon, squelet_weapon[i], SWORD);
 }

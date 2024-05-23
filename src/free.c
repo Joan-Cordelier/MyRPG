@@ -26,22 +26,13 @@ void my_destroy(hero_t *sprite)
     sfSprite_destroy(sprite->spStam);
     sfTexture_destroy(sprite->texMan);
     sfSprite_destroy(sprite->spMan);
-    sfSprite_destroy(sprite->spW);
     sfRectangleShape_destroy(sprite->colision);
-}
-
-void my_destroy_w(weapon_t *arme)
-{
-    sfTexture_destroy(arme->texture);
-    sfSprite_destroy(arme->sprite);
 }
 
 void my_free(hero_t *sprite, weapon_t *arme)
 {
     my_destroy(sprite);
-    my_destroy_w(sprite->arme);
-    my_destroy_w(arme);
     free(sprite->player);
-    free(sprite->arme);
+    free(sprite->weapon);
     free(sprite);
 }

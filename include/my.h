@@ -40,15 +40,13 @@ int is_touching(int x, int y, int **txt_map);
 //csfml_utils.c
 sfVector2i mouse(sfRenderWindow *window);
 sfSprite *fond(char *file, float x, float y);
-sfSprite *change_arms(sfSprite *sword, char **arms,
-    int *change);
 
 //csfml.c
 void menu_prcp(window_t *window);
 void move_rect(sfIntRect *rect, int offset, int max, int i);
 
 //csfml2.c
-void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back);
+void destroy_sprites(sfSprite *mob, sfSprite *back);
 void moove_and_set(hero_t *plyr, map_t *map);
 void move_anim(hero_t *cible, int n);
 
@@ -56,8 +54,7 @@ void move_anim(hero_t *cible, int n);
 void dead(hero_t *hero, map_t *map);
 
 //event.c
-sfSprite *poll_event(map_t *map, window_t *window, hero_t *plyr,
-    sfSprite *sword);
+void poll_event(map_t *map, window_t *window, hero_t *plyr);
 
 //map_utils.c
 void init_map(map_t *map);
@@ -72,7 +69,8 @@ int set_move(hero_t *plyr, map_t *map);
 hero_t *init_hero(char *file, int x, int y, int status);
 
 //sword_rotate.c
-void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword);
+void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword,
+    int change);
 void rotate_mob(hero_t *plyr, hero_t *mob);
 float sword_rotate(hero_t *plyr, sfVector2i button_positions);
 

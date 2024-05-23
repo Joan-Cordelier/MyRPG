@@ -84,8 +84,6 @@ typedef struct hero_s {
     sfTexture *texture;
     sfSprite *sprite;
     sfTexture *texHP;
-    sfSprite *spW;
-    sfTexture *texW;
     sfSprite *spHP;
     sfTexture *texStam;
     sfSprite *spStam;

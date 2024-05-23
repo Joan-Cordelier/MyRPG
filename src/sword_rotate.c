@@ -7,18 +7,27 @@
 
 #include "my.h"
 
-void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword)
+void rotate_png(hero_t *plyr, sfVector2i button_positions, sfSprite *sword,
+    int change)
 {
     sfVector2f oriplyr = sfSprite_getPosition(plyr->sprite);
 
     if (button_positions.x > oriplyr.x) {
         sfSprite_setScale(plyr->sprite, (sfVector2f){-2, 2});
         sfSprite_setScale(sword, (sfVector2f){1, 1});
+        sfRectangleShape_setScale(plyr->weapon->colision_w,
+            (sfVector2f){1, 1});
     } else {
         sfSprite_setScale(plyr->sprite, (sfVector2f){2, 2});
         sfSprite_setScale(sword, (sfVector2f){-1, 1});
+        sfRectangleShape_setScale(plyr->weapon->colision_w,
+            (sfVector2f){-1, 1});
         plyr->angle = plyr->angle * -1;
     }
+    if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0)
+        plyr->angle = plyr->angle - 90.0;
+    sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
+    sfRectangleShape_setRotation(plyr->weapon->colision_w, plyr->angle);
 }
 
 void rotate_mob(hero_t *plyr, hero_t *mob)
@@ -27,13 +36,17 @@ void rotate_mob(hero_t *plyr, hero_t *mob)
 
     if (plyr->posx < oriplyr.x) {
         sfSprite_setScale(mob->sprite, (sfVector2f){-2, 2});
-        sfSprite_setScale(mob->spW, (sfVector2f){-2, 2});
+        sfSprite_setScale(mob->weapon->weapon, (sfVector2f){-2, 2});
+        sfRectangleShape_setScale(mob->weapon->colision_w,
+            (sfVector2f){-1, 1});
         mob->angle = mob->angle * -1;
     } else {
         sfSprite_setScale(mob->sprite, (sfVector2f){2, 2});
-        sfSprite_setScale(mob->spW, (sfVector2f){2, 2});
+        sfSprite_setScale(mob->weapon->weapon, (sfVector2f){2, 2});
+        sfRectangleShape_setScale(mob->weapon->colision_w, (sfVector2f){1, 1});
     }
-    sfSprite_setRotation(mob->spW, mob->angle);
+    sfSprite_setRotation(mob->weapon->weapon, mob->angle);
+    sfRectangleShape_setRotation(mob->weapon->colision_w, mob->angle);
 }
 
 float sword_rotate(hero_t *plyr, sfVector2i button_positions)

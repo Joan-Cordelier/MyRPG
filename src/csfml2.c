@@ -19,10 +19,9 @@ void move_anim(hero_t *cible, int n)
     }
 }
 
-void destroy_sprites(sfSprite *mob, sfSprite *shoot, sfSprite *back)
+void destroy_sprites(sfSprite *mob, sfSprite *back)
 {
     sfSprite_destroy(mob);
-    sfSprite_destroy(shoot);
     sfSprite_destroy(back);
 }
 
