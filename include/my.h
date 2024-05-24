@@ -83,6 +83,7 @@ hero_t *init_hero(char *file, int x, int y, int status);
 
 //sword_hit.c
 void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change);
+void sword_hit_mob(hero_t *plyr, hero_t *mob, map_t *map, int change);
 
 //sword_rotate.c
 void rotate_png(hero_t *plyr, sfVector2i button_positions);

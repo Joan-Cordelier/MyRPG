@@ -94,6 +94,7 @@ static void enemie(hero_t *mob, hero_t *plyr, window_t *window, map_t *map)
     colision(mob, plyr, map);
     mob->angle = sword_rotate(mob, (sfVector2i){plyr->posx, plyr->posy});
     rotate_mob(plyr, mob);
+    sword_hit_mob(mob, plyr, map, window->change);
     draw_ennemie(mob, window, map);
 }
 

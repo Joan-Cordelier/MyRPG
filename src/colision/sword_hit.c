@@ -35,3 +35,19 @@ void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change)
     sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
     sfRectangleShape_setRotation(plyr->weapon->colision_w, plyr->angle);
 }
+
+void sword_hit_mob(hero_t *plyr, hero_t *mob, map_t *map, int change)
+{
+    sfTime clock_espl;
+
+    clock_espl = sfClock_getElapsedTime(plyr->spatt);
+    if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1
+        && clock_espl.microseconds > 1000000) {
+        aply_change_hit(mob, map, plyr->weapon);
+        sfClock_restart(plyr->spatt);
+    }
+    plyr->angle = plyr->angle - 90.0;
+    sfSound_play(plyr->songS);
+    sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
+    sfRectangleShape_setRotation(plyr->weapon->colision_w, plyr->angle);
+}
