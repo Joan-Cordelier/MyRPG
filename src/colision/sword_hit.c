@@ -26,7 +26,8 @@ void level_up(hero_t *plyr)
 
 void aply_change_hit(hero_t *plyr, hero_t *mob, map_t *map, weapon_t *weapon)
 {
-    mob->player->life = mob->player->life - weapon->damage + (plyr->XP * plyr->XP);
+    mob->player->life = mob->player->life - weapon->damage + (
+        plyr->XP * plyr->XP);
     if (mob->player->life <= 0 && mob->status == PLAYER)
         dead_hero(mob, map);
     if (mob->player->life <= 0 && mob->status == SQUELETON) {
@@ -35,7 +36,8 @@ void aply_change_hit(hero_t *plyr, hero_t *mob, map_t *map, weapon_t *weapon)
         sfSprite_setTextureRect(plyr->spXP, plyr->recXP);
         sfClock_restart(plyr->clockXP);
     }
-    mob->recHP.width = mob->recHP.width - weapon->damage + (plyr->XP * plyr->XP);
+    mob->recHP.width = mob->recHP.width - weapon->damage + (
+        plyr->XP * plyr->XP);
     sfSprite_setTextureRect(mob->spHP, mob->recHP);
 }
 
