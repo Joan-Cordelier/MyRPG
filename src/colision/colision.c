@@ -40,8 +40,7 @@ int is_touching_border(int x, int y)
     return 0;
 }
 
-int map_colision_2(sfRectangleShape *exit, hero_t *plyr, map_t *map,
-    hero_t *mob)
+int map_colision_2(sfRectangleShape *exit, hero_t *plyr, map_t *map)
 {
     sfFloatRect rect_ply = sfRectangleShape_getGlobalBounds(plyr->colision);
     sfFloatRect rect_exit = sfRectangleShape_getGlobalBounds(exit);
@@ -52,6 +51,7 @@ int map_colision_2(sfRectangleShape *exit, hero_t *plyr, map_t *map,
             sfRectangleShape_setOutlineColor(exit, sfRed);
             return 1;
         }
+        return 0;
     } else {
         sfRectangleShape_setOutlineColor(plyr->colision, sfGreen);
         sfRectangleShape_setOutlineColor(exit, sfGreen);
@@ -90,7 +90,7 @@ static void set_new_map_prev(window_t *window, hero_t *plyr, map_t *map,
 map_t *map_colision(window_t *window, hero_t *plyr, map_t *map, hero_t *mob)
 {
     if (map->is_next) {
-        if (map_colision_2(map->exit_player_next, plyr, map, mob) == 1) {
+        if (map_colision_2(map->exit_player_next, plyr, map) == 1) {
             sfSound_stop(map->song);
             map->rep = 0;
             map = map->prev;
@@ -98,7 +98,7 @@ map_t *map_colision(window_t *window, hero_t *plyr, map_t *map, hero_t *mob)
         }
     }
     if (map->is_prev) {
-        if (map_colision_2(map->exit_player_prev, plyr, map, mob) == 1) {
+        if (map_colision_2(map->exit_player_prev, plyr, map) == 1) {
             sfSound_stop(map->song);
             map = map->next;
             set_new_map_prev(window, plyr, map, mob);

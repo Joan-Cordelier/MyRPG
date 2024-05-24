@@ -85,7 +85,7 @@ int poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window,
     return 0;
 }
 
-static void inventory(hero_t *plyr, sfEvent event)
+static void is_pressed(hero_t *plyr, sfEvent event, map_t *map)
 {
     if (event.key.code == sfKeyI) {
         if (plyr->Inv == false)
@@ -93,11 +93,12 @@ static void inventory(hero_t *plyr, sfEvent event)
         else
             plyr->Inv = false;
     }
+    if (event.key.code == sfKeyF)
+        check_status(map->pnj, plyr);
 }
 
-void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
+static sfVector2f set_bulet(window_t *window, hero_t *plyr)
 {
-    sfEvent event;
     sfVector2f shoot_positions;
 
     if ((plyr->weapon->status == GUN || plyr->weapon->status == SPELL)) {
@@ -106,9 +107,17 @@ void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
                 (sfVector2f){plyr->posx, plyr->posy});
         shoot_positions = sfSprite_getPosition(plyr->weapon->bullet);
     }
+    return shoot_positions;
+}
+
+void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
+{
+    sfEvent event;
+    sfVector2f shoot_positions = set_bulet(window, plyr);
+
     while (sfRenderWindow_pollEvent(window->window, &event)) {
         if (event.type == sfEvtKeyPressed)
-            inventory(plyr, event);
+            is_pressed(plyr, event, map);
         if (event.type == sfEvtClosed) {
             sfRenderWindow_close(window->window);
             break;

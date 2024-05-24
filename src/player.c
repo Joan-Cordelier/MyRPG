@@ -90,6 +90,8 @@ int set_move(hero_t *plyr, map_t *map)
 {
     sfTime clock_espl;
 
+    if (!plyr->moove)
+        return 1;
     clock_espl = sfClock_getElapsedTime(plyr->endspe);
     if (sfKeyboard_isKeyPressed(sfKeyA) && plyr->player->end > 0) {
         sfClock_restart(plyr->endspe);

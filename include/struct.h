@@ -92,8 +92,9 @@ typedef struct stat_s {
 } stat_t;
 
 typedef struct hero_s {
-    sfTexture *texIn;                                                                                                                                                                                                                                                                                                            
+    sfTexture *texIn;
     sfSprite *spIn;
+    sfIntRect recIn;
     sfRectangleShape *colision;
     sfSound *songG;
     sfSoundBuffer *songG2;
@@ -124,7 +125,7 @@ typedef struct hero_s {
     int viewy;
     int posx;
     int posy;
-    bool Inv;                                                                                                                                                                                                                                                                                                     
+    bool Inv;
     bool moove;
     int status;
 } hero_t;
@@ -132,9 +133,14 @@ typedef struct hero_s {
 typedef struct pnj_s {
     sfSprite *pnj;
     sfTexture *pnj_texture;
+    sfFont* font;
+    sfText* text;
+    char **dialogue;
     int posx;
     int posy;
+    int line;
     int status;
+    bool talk;
 } pnj_t;
 
 typedef struct map_s {

@@ -27,7 +27,7 @@ static void draw_sprite(window_t *window, hero_t *plyr, map_t *map,
     sfView_setCenter(plyr->run, (sfVector2f){plyr->posx, plyr->posy});
     sfSprite_setPosition(plyr->sprite, pos);
     sfSprite_setPosition(plyr->weapon->weapon, pos);
-    sfSprite_setPosition(plyr->spIn,                                                                                                                                                                                                                                                                                              
+    sfSprite_setPosition(plyr->spIn,
         (sfVector2f){plyr->posx - 180, plyr->posy + 350});
     sfSprite_setPosition(plyr->spHP,
         (sfVector2f){plyr->posx - 50, plyr->posy - 190});
@@ -52,7 +52,7 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back)
     sfRenderWindow_drawSprite(window->window, plyr->spStam, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->spMan, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->weapon->weapon, NULL);
-    if (plyr->Inv == true)                                                                                                                                                                                                                                                                                                        
+    if (plyr->Inv == true)
         sfRenderWindow_drawSprite(window->window, plyr->spIn, NULL);
     sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);
     sfRenderWindow_drawRectangleShape(window->window,
@@ -74,6 +74,8 @@ static void draw_ennemie(hero_t *mob, window_t *window, map_t *map)
         sfRenderWindow_drawRectangleShape(window->window,
             map->exit_player_prev, NULL);
     sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
+    if (map->pnj->talk == true)
+        sfRenderWindow_drawText(window->window, map->pnj->text, NULL);
 }
 
 static void set_ennemie(hero_t *mob, window_t *window, map_t *map)
@@ -135,7 +137,6 @@ void my_rpg(window_t *window, hero_t *plyr, hero_t *mob)
         show_window(window, plyr, map->map);
         enemie(mob, plyr, window, map);
         poll_event(map, window, plyr, mob);
-        check_status(map->pnj, plyr, window);
         sfRenderWindow_display(window->window);
     }
     destroy_sprites(mob->sprite, map->map);

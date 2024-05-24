@@ -31,6 +31,16 @@ void my_destroy(hero_t *sprite)
     sfRectangleShape_destroy(sprite->colision);
 }
 
+void destroy_pnj(pnj_t *pnj)
+{
+    sfFont_destroy(pnj->font);
+    sfText_destroy(pnj->text);
+}
+
+void destroy_map(map_t *map)
+{
+}
+
 void my_free(hero_t *sprite, weapon_t *arme)
 {
     my_destroy(sprite);
