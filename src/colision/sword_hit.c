@@ -25,7 +25,7 @@ void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change)
     clock_espl = sfClock_getElapsedTime(plyr->spatt);
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0) {
         if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1
-            && clock_espl.microseconds > 200000) {
+            && clock_espl.microseconds > 500000) {
             aply_change_hit(mob, map, plyr->weapon);
             sfClock_restart(plyr->spatt);
         }
@@ -50,4 +50,6 @@ void sword_hit_mob(hero_t *plyr, hero_t *mob, map_t *map, int change)
     sfSound_play(plyr->songS);
     sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
     sfRectangleShape_setRotation(plyr->weapon->colision_w, plyr->angle);
+    plyr->angle = sword_rotate(plyr, (sfVector2i){mob->posx, mob->posy});
+    rotate_mob(mob, plyr);
 }

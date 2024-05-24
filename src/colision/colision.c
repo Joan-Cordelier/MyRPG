@@ -91,12 +91,15 @@ map_t *map_colision(window_t *window, hero_t *plyr, map_t *map, hero_t *mob)
 {
     if (map->is_next) {
         if (map_colision_2(map->exit_player_next, plyr, map, mob) == 1) {
+            sfSound_stop(map->song);
+            map->rep = 0;
             map = map->prev;
             set_new_map_new(window, plyr, map, mob);
         }
     }
     if (map->is_prev) {
         if (map_colision_2(map->exit_player_prev, plyr, map, mob) == 1) {
+            sfSound_stop(map->song);
             map = map->next;
             set_new_map_prev(window, plyr, map, mob);
         }
@@ -122,8 +125,3 @@ void colision(hero_t *mob, hero_t *plyr, map_t *map)
         sfRectangleShape_setOutlineColor(mob->colision, sfGreen);
     }
 }
-
-//in map_collision
-
-//sfSound_stop(map->song);
-//sfSound_stop(map->song);

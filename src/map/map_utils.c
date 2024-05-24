@@ -61,6 +61,11 @@ static void init_cave(map_t *map)
     map->exit_player_next = sfRectangleShape_create();
     set_rect(map->exit_player_next, 7 * 160, 50 * 160);
     map->is_next = true;
+    map->timeS = sfClock_create();
+    map->song = sfSound_create();
+    map->song2 = sfSoundBuffer_createFromFile("sprite/song/AtDoomsGate.ogg");
+    map->rep = 0;
+    sfSound_setBuffer(map->song, map->song2);
     init_pnj_cave(map);
 }
 
@@ -74,6 +79,11 @@ static void init_spawn(map_t *map)
     map->exit_player_next = sfRectangleShape_create();
     set_rect(map->exit_player_next, 2 * 160, 31 * 160);
     map->is_next = true;
+    map->timeS = sfClock_create();
+    map->song = sfSound_create();
+    map->song2 = sfSoundBuffer_createFromFile("sprite/song/AtDoomsGate.ogg");
+    map->rep = 0;
+    sfSound_setBuffer(map->song, map->song2);
     init_pnj_cave(map);
 }
 
