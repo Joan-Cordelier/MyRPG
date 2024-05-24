@@ -123,7 +123,6 @@ static map_t *map_check(map_t *map, hero_t *plyr, hero_t *mob)
     sfSound_setBuffer(map->song, map->song2);
     return map;
 }
-
 void my_rpg(window_t *window, hero_t *plyr, hero_t *mob)
 {
     map_t *map = malloc(sizeof(map_t));
@@ -136,6 +135,7 @@ void my_rpg(window_t *window, hero_t *plyr, hero_t *mob)
         show_window(window, plyr, map->map);
         enemie(mob, plyr, window, map);
         poll_event(map, window, plyr, mob);
+        check_status(map->pnj, plyr, window);
         sfRenderWindow_display(window->window);
     }
     destroy_sprites(mob->sprite, map->map);
