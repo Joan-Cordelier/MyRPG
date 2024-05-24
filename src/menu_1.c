@@ -7,9 +7,9 @@
 
 #include "my.h"
 
-void handle_button_events(button_t *button, sfRenderWindow *window)
+void handle_button_events(button_t *button, window_t *window)
 {
-    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window);
+    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(window->window);
     sfFloatRect button_rect = sfText_getGlobalBounds(button->text);
 
     if (!sfFloatRect_contains(&button_rect, mouse_pos.x, mouse_pos.y)) {
@@ -51,7 +51,7 @@ void handle_events(window_t *window, button_t **buttons, size_t button_count)
         }
     }
     for (size_t i = 0; i < button_count; ++i) {
-        handle_button_events(buttons[i], window->window);
+        handle_button_events(buttons[i], window);
     }
 }
 
@@ -80,7 +80,7 @@ void display_main_menu(window_t *window)
     while (sfRenderWindow_isOpen(window->window)) {
         handle_events(window, buttons, button_count);
         sfRenderWindow_clear(window->window, sfBlack);
-        render_buttons(window->window, buttons, button_count);
+        render_buttons(window, buttons, button_count);
         sfRenderWindow_display(window->window);
     }
     cleanup(buttons, button_count);

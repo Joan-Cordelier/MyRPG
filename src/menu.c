@@ -7,18 +7,18 @@
 
 #include "my.h"
 
-void handle_exit_button_click(button_t *button, sfRenderWindow *window)
+void handle_exit_button_click(button_t *button, window_t *window)
 {
     if (strcmp(button->name, "Exit") == 0 && button->state == CLICKED) {
-        sfRenderWindow_close(window);
+        sfRenderWindow_close(window->window);
     }
 }
 
-void render_buttons(sfRenderWindow *window,
+void render_buttons(window_t *window,
     button_t **buttons, size_t button_count)
 {
     for (size_t i = 0; i < button_count; ++i) {
-        sfRenderWindow_drawText(window, buttons[i]->text, NULL);
+        sfRenderWindow_drawText(window->window, buttons[i]->text, NULL);
     }
 }
 

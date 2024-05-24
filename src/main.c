@@ -44,14 +44,14 @@ int main(int ac, __attribute__((unused)) char **av)
         login(av[1], false);
         window = init_window(1920, 1080, 60, "My_RPG");
         my_loading(window->window, NULL);
-        menu_prcp(window);
+        display_main_menu(window);
         return 0;
     }
     if (ac == 1) {
         login(NULL, true);
         window = init_window(1920, 1080, 60, "My_RPG");
         my_loading(window->window, NULL);
-        menu_prcp(window);
+        display_main_menu(window);
         return 0;
     }
     return 0;
