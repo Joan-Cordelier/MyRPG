@@ -99,6 +99,10 @@ typedef struct inventaire_s {
     sfRectangleShape *gun;
     sfRectangleShape *fioleVie;
     sfRectangleShape *fioleMana;
+    sfTexture *txS;
+    sfSprite *spS;
+    sfTexture *txG;
+    sfSprite *spG;
 } inventaire_t;
 
 typedef struct hero_s {
