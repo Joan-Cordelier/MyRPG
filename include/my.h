@@ -71,6 +71,7 @@ void init_pnj_cave(map_t *map);
 void init_map(map_t *map);
 char **my_str_to_word_array(char *str, char *end);
 char *open_read(const char *path);
+void set_rect(sfRectangleShape *rect, int x, int y);
 
 //mooves_mobs.c
 void moove_squeleton(hero_t *plyr, hero_t *mob, map_t *map);
@@ -81,6 +82,11 @@ int set_move(hero_t *plyr, map_t *map);
 
 //pnj.c
 hero_t *init_hero(char *file, int x, int y, int status);
+
+//print_inventaire.c
+void set_inventaire(hero_t *plyr);
+void print_inventaire(window_t *window, hero_t *plyr);
+void set_rect_inv(sfRectangleShape *rect, int x, int y);
 
 //sword_hit.c
 void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change);

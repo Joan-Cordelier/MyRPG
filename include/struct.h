@@ -91,10 +91,17 @@ typedef struct stat_s {
     int lv_magie;
 } stat_t;
 
-typedef struct hero_s {
+typedef struct inventaire_s {
     sfTexture *texIn;
     sfSprite *spIn;
     sfIntRect recIn;
+    sfRectangleShape *epee;
+    sfRectangleShape *gun;
+    sfRectangleShape *fioleVie;
+    sfRectangleShape *fioleMana;
+} inventaire_t;
+
+typedef struct hero_s {
     sfRectangleShape *colision;
     sfSound *songG;
     sfSoundBuffer *songG2;
@@ -118,6 +125,7 @@ typedef struct hero_s {
     sfIntRect recStam;
     sfIntRect recMan;
     sfView *run;
+    inventaire_t *inv;
     stat_t *player;
     weapon_t *weapon;
     float angle;

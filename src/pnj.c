@@ -32,13 +32,10 @@ static void crate_stats_sprites(hero_t *hero)
     hero->spStam = sfSprite_create();
     hero->texMan = sfTexture_createFromFile("sprite/hero_rpg/Mana.png", NULL);
     hero->spMan = sfSprite_create();
-    hero->texIn = sfTexture_createFromFile("sprite/map/inventory.png", NULL);
-    hero->spIn = sfSprite_create();
 }
 
 static void set_sprite_stat(hero_t *hero)
 {
-    sfSprite_setTexture(hero->spIn, hero->texIn, sfTrue);
     sfSprite_setTexture(hero->spHP, hero->texHP, sfTrue);
     sfSprite_setTexture(hero->spStam, hero->texStam, sfTrue);
     sfSprite_setTexture(hero->spMan, hero->texMan, sfTrue);
@@ -70,17 +67,35 @@ static void create_stat(hero_t *hero)
     set_sprite_stat(hero);
 }
 
-static void create_inv(hero_t *hero)
+void init_inventaire(inventaire_t *hero, hero_t *plyr)
 {
-    hero->Inv = false;
+    plyr->Inv = false;
     hero->recIn.top = 207;
     hero->recIn.left = 80;
     hero->recIn.width = 80;
     hero->recIn.height = 230;
+    hero->texIn = sfTexture_createFromFile("sprite/map/inventory.png", NULL);
+    hero->spIn = sfSprite_create();
+    sfSprite_setTexture(hero->spIn, hero->texIn, sfTrue);
     sfSprite_setTextureRect(hero->spIn, hero->recIn);
     sfSprite_setScale(hero->spIn, (sfVector2f){5, 5});
     sfSprite_setPosition(hero->spIn,
-        (sfVector2f){hero->posx - 40, hero->posy - 10});
+        (sfVector2f){plyr->posx - 40, plyr->posy - 10});
+    hero->epee = sfRectangleShape_create();
+    hero->gun = sfRectangleShape_create();
+    hero->fioleMana = sfRectangleShape_create();
+    hero->fioleVie = sfRectangleShape_create();
+    set_rect_inv(hero->epee, plyr->posx - 40, plyr->posy - 10);
+    set_rect_inv(hero->gun, plyr->posx - 20, plyr->posy - 10);
+    set_rect_inv(hero->fioleMana, plyr->posx, plyr->posy - 10);
+    set_rect_inv(hero->fioleVie, plyr->posx + 20, plyr->posy - 10);
+}
+
+static void create_inv(hero_t *hero)
+{
+    hero->inv = malloc(sizeof(inventaire_t));
+    memset(hero->inv, 0, sizeof(inventaire_t));
+    init_inventaire(hero->inv, hero);
 }
 
 static void create_hero(hero_t *hero, char *file, int x, int y)
