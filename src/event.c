@@ -87,7 +87,7 @@ int poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window,
 
 static void is_pressed(hero_t *plyr, sfEvent event, map_t *map)
 {
-    if (event.key.code == sfKeyI) {
+    if (event.key.code == sfKeySpace) {
         if (plyr->Inv == false)
             plyr->Inv = true;
         else
