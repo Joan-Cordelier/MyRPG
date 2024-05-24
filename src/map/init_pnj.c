@@ -25,6 +25,22 @@ void check_status(pnj_t *pnj, hero_t *hero)
     hero->moove = true;
 }
 
+void init_pnj_null(map_t *map)
+{
+    map->pnj = malloc(sizeof(pnj_t));
+    memset(map->pnj, 0, sizeof(pnj_t));
+    map->pnj->pnj = sfSprite_create();
+    map->pnj->pnj_texture = sfTexture_createFromFile("sprite/mob_boss/pnj.png",
+        NULL);
+    map->pnj->posx = 10000;
+    map->pnj->posy = 10000;
+    sfSprite_setTexture(map->pnj->pnj, map->pnj->pnj_texture, sfTrue);
+    sfSprite_setOrigin(map->pnj->pnj, (sfVector2f){0, 0});
+    sfSprite_setPosition(map->pnj->pnj,
+        (sfVector2f){map->pnj->posx, map->pnj->posy});
+    sfSprite_setScale(map->pnj->pnj, (sfVector2f){2, 2});
+}
+
 void init_pnj_cave(map_t *map)
 {
     char *buffer = open_read("dialogue/dialogue.txt");

@@ -64,6 +64,7 @@ void dead_mob(hero_t *hero, map_t *map);
 void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob);
 
 //init_pnj.c
+void init_pnj_null(map_t *map);
 void check_status(pnj_t *pnj, hero_t *hero);
 void init_pnj_cave(map_t *map);
 
