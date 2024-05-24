@@ -98,5 +98,15 @@ sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
 window_t *init_window(unsigned int x, unsigned int y, int frame, char *title);
 void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon);
+void handle_exit_button_click(button_t *button, sfRenderWindow *window);
+void handle_button_events(button_t *button, sfRenderWindow *window);
+void render_buttons(sfRenderWindow *window,
+    button_t **buttons, size_t button_count);
+button_t *create_button(const char *name, sfVector2f position, sfFont *font);
+void handle_events(window_t *window, button_t **buttons, size_t button_count);
+void cleanup(button_t **buttons, size_t button_count);
+button_t **create_menu_buttons(sfFont *font);
+void display_main_menu(window_t *window);
+
 
 #endif

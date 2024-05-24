@@ -26,6 +26,18 @@ typedef enum {
 } weapon_status_t;
 
 typedef enum {
+    NONE,
+    HOVER,
+    CLICKED
+} button_state_t;
+
+typedef struct {
+    char *name;
+    sfText *text;
+    button_state_t state;
+} button_t;
+
+typedef enum {
     PLYR,
     SQUELETON,
     BOSS,
