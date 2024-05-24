@@ -53,14 +53,6 @@ void print_inventaire(window_t *window, hero_t *plyr)
 {
     if (plyr->Inv == true) {
         sfRenderWindow_drawSprite(window->window, plyr->inv->spIn, NULL);
-        sfRenderWindow_drawRectangleShape(window->window,
-            plyr->inv->epee, NULL);
-        sfRenderWindow_drawRectangleShape(window->window,
-            plyr->inv->gun, NULL);
-        sfRenderWindow_drawRectangleShape(window->window,
-            plyr->inv->fioleMana, NULL);
-        sfRenderWindow_drawRectangleShape(window->window,
-            plyr->inv->fioleVie, NULL);
         sfRenderWindow_drawSprite(window->window, plyr->inv->spG, NULL);
         sfRenderWindow_drawSprite(window->window, plyr->inv->spS, NULL);
     }

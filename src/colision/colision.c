@@ -63,12 +63,7 @@ static void set_new_map_new(window_t *window, hero_t *plyr, map_t *map,
     hero_t *mob)
 {
     set_mob_back_shoot(mob, plyr, map);
-    if (map->is_next)
-        sfRenderWindow_drawRectangleShape(window->window,
-            map->exit_player_next, NULL);
-    if (map->is_prev)
-        sfRenderWindow_drawRectangleShape(window->window,
-            map->exit_player_prev, NULL);
+
     sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
     sfRenderWindow_drawSprite(window->window, map->map, NULL);
 }
@@ -77,12 +72,6 @@ static void set_new_map_prev(window_t *window, hero_t *plyr, map_t *map,
     hero_t *mob)
 {
     set_mob_back_shoot(mob, plyr, map);
-    if (map->is_next)
-        sfRenderWindow_drawRectangleShape(window->window,
-            map->exit_player_next, NULL);
-    if (map->is_prev)
-        sfRenderWindow_drawRectangleShape(window->window,
-            map->exit_player_prev, NULL);
     sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
     sfRenderWindow_drawSprite(window->window, map->map, NULL);
 }

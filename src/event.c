@@ -41,8 +41,30 @@ static sfVector2i attack(int change, window_t *window, hero_t *plyr)
     return window->button_positions;
 }
 
+void switch_weapn(sfVector2i pos, window_t *window, hero_t *plyr)
+{
+    if (pos.y >= plyr->posy + 350 && pos.y <= plyr->posy + 430 &&
+        pos.x >= plyr->posx - 180 && pos.x <= plyr->posx + 140 &&
+        window->change < 1) {
+        window->change = window->change + 1;
+        plyr->weapon = plyr->weapon->prev;
+    }
+    if (pos.y >= plyr->posy + 350 && pos.y <= plyr->posy + 430 &&
+        pos.x >= plyr->posx - 140 && pos.x <= plyr->posx -70 &&
+        window->change > 0) {
+        window->change = window->change - 1;
+        plyr->weapon = plyr->weapon->next;
+    }
+}
+
 static void mouse_button_press(sfEvent event, window_t *window, hero_t *plyr)
 {
+    sfVector2i pos = mouse(window->window);
+
+    if (event.mouseButton.button == sfMouseLeft && pos.y >= plyr->posy + 350 &&
+        pos.y <= plyr->posy + 430 && pos.x >= plyr->posx - 180 && pos.x <=
+        plyr->posx + 115 && plyr->Inv == true)
+        switch_weapn(pos, window, plyr);
     if (event.mouseButton.button == sfMouseLeft && window->speed != 1 &&
         (plyr->weapon->status == GUN || plyr->weapon->status == SPELL)) {
         window->button_positions = attack(window->change, window, plyr);
@@ -74,8 +96,6 @@ int poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window,
             return 1;
         }
         sfRenderWindow_drawSprite(window->window, plyr->weapon->bullet, NULL);
-        sfRenderWindow_drawRectangleShape(window->window,
-            plyr->weapon->colision_b, NULL);
     }
     if ((plyr->weapon->status == GUN || plyr->weapon->status == SPELL) &&
         window->speed == 0) {

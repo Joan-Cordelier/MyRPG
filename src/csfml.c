@@ -55,9 +55,6 @@ static void show_window(window_t *window, hero_t *plyr, sfSprite *back)
     sfRenderWindow_drawSprite(window->window, plyr->spXP, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->weapon->weapon, NULL);
     print_inventaire(window, plyr);
-    sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);
-    sfRenderWindow_drawRectangleShape(window->window,
-        plyr->weapon->colision_w, NULL);
 }
 
 static void draw_ennemie(hero_t *mob, window_t *window, map_t *map)
@@ -65,15 +62,6 @@ static void draw_ennemie(hero_t *mob, window_t *window, map_t *map)
     sfRenderWindow_drawSprite(window->window, mob->sprite, NULL);
     sfRenderWindow_drawSprite(window->window, mob->weapon->weapon, NULL);
     sfRenderWindow_drawSprite(window->window, mob->spHP, NULL);
-    sfRenderWindow_drawRectangleShape(window->window, mob->colision, NULL);
-    sfRenderWindow_drawRectangleShape(window->window,
-        mob->weapon->colision_w, NULL);
-    if (map->is_next)
-        sfRenderWindow_drawRectangleShape(window->window,
-            map->exit_player_next, NULL);
-    if (map->is_prev)
-        sfRenderWindow_drawRectangleShape(window->window,
-            map->exit_player_prev, NULL);
     sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
     if (map->pnj->talk == true)
         sfRenderWindow_drawText(window->window, map->pnj->text, NULL);
