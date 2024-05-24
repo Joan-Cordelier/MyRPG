@@ -27,6 +27,17 @@ void destroy_sprites(sfSprite *mob, sfSprite *back)
 
 void moove_and_set(hero_t *plyr, map_t *map)
 {
+    /* sfTime clock_espl;
+
+    clock_espl = sfClock_getElapsedTime(map->timeS);
+    if (map->rep == 0) {
+        map->rep++;
+        sfSound_play(map->song);
+    }
+    if (clock_espl.microseconds > 66000000) {
+        sfClock_restart(map->timeS);
+        map->rep = 0;
+    } */
     move_anim(plyr, 3);
     set_move(plyr, map);
 }

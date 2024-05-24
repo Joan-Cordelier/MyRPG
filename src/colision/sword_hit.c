@@ -30,6 +30,7 @@ void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change)
             sfClock_restart(plyr->spatt);
         }
         plyr->angle = plyr->angle - 90.0;
+        sfSound_play(plyr->songS);
     }
     sfSprite_setRotation(plyr->weapon->weapon, plyr->angle);
     sfRectangleShape_setRotation(plyr->weapon->colision_w, plyr->angle);

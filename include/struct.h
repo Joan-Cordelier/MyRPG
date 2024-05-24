@@ -83,6 +83,8 @@ typedef struct hero_s {
     sfRectangleShape *colision;
     sfSound *songG;
     sfSoundBuffer *songG2;
+    sfSound *songS;
+    sfSoundBuffer *songS2;
     sfClock *anim;
     sfClock *endspe;
     sfClock *spatt;
@@ -129,6 +131,10 @@ typedef struct map_s {
     sfRectangleShape *exit_player_prev;
     int is_prev;
     sfVector2f start_mob;
+    sfSound *song;
+    sfSoundBuffer *song2;
+    sfClock *timeS;
+    int rep;
     int **txt_map;
     struct pnj_s *pnj;
     struct map_s *next;

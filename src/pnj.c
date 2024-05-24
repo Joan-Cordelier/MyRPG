@@ -23,6 +23,8 @@ static void crate_stats_sprites(hero_t *hero)
 {
     hero->songG2 = sfSoundBuffer_createFromFile("sprite/song/Shotgun.ogg");
     hero->songG = sfSound_create();
+    hero->songS2 = sfSoundBuffer_createFromFile("sprite/song/Sword.ogg");
+    hero->songS = sfSound_create();
     hero->texHP = sfTexture_createFromFile("sprite/hero_rpg/HP.png", NULL);
     hero->spHP = sfSprite_create();
     hero->texStam = sfTexture_createFromFile(
@@ -44,6 +46,7 @@ static void set_sprite_stat(hero_t *hero)
     sfSprite_setScale(hero->spStam, hero->scale);
     sfSprite_setScale(hero->spMan, hero->scale);
     sfSound_setBuffer(hero->songG, hero->songG2);
+    sfSound_setBuffer(hero->songS, hero->songS2);
 }
 
 static void create_stat(hero_t *hero)

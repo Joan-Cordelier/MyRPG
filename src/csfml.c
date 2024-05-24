@@ -115,6 +115,11 @@ static map_t *map_check(map_t *map, hero_t *plyr, hero_t *mob)
     init_map(map);
     map = map->prev;
     set_mob_back_shoot(mob, plyr, map);
+    map->timeS = sfClock_create();
+    map->song = sfSound_create();
+    map->song2 = sfSoundBuffer_createFromFile("sprite/song/AtDoomsGate.ogg");
+    map->rep = 0;
+    sfSound_setBuffer(map->song, map->song2);
     return map;
 }
 
