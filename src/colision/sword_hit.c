@@ -7,6 +7,22 @@
 
 #include "my.h"
 
+void level_up(hero_t *plyr)
+{
+    sfTime clock_espl;
+
+    if (plyr->recXP.width >= 100)
+        sfSound_play(plyr->songXP);
+    clock_espl = sfClock_getElapsedTime(plyr->clockXP);
+    if (plyr->recXP.width >= 100 && clock_espl.microseconds > 2000000) {
+        plyr->recXP.width = 0;
+        plyr->XP = plyr->XP + 1;
+        sfSprite_setTextureRect(plyr->spXP, plyr->recXP);
+        sfClock_restart(plyr->clockXP);
+        return;
+    }
+}
+
 void aply_change_hit(hero_t *plyr, hero_t *mob, map_t *map, weapon_t *weapon)
 {
     mob->player->life = mob->player->life - weapon->damage;
@@ -15,11 +31,8 @@ void aply_change_hit(hero_t *plyr, hero_t *mob, map_t *map, weapon_t *weapon)
     if (mob->player->life <= 0 && mob->status == SQUELETON) {
         dead_mob(mob, map);
         plyr->recXP.width = plyr->recXP.width + 50 / plyr->XP;
-        if (plyr->recXP.width >= 100) {
-            plyr->recXP.width = 0;
-            plyr->XP = plyr->XP + 1;
-        }
         sfSprite_setTextureRect(plyr->spXP, plyr->recXP);
+        sfClock_restart(plyr->clockXP);
     }
     mob->recHP.width = mob->recHP.width - weapon->damage;
     sfSprite_setTextureRect(mob->spHP, mob->recHP);

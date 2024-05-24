@@ -96,6 +96,7 @@ void set_rect_inv(sfRectangleShape *rect, int x, int y);
 void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change);
 void sword_hit_mob(hero_t *plyr, hero_t *mob, map_t *map, int change);
 void hero_xp(hero_t *hero);
+void level_up(hero_t *plyr);
 
 //sword_rotate.c
 void rotate_png(hero_t *plyr, sfVector2i button_positions);
