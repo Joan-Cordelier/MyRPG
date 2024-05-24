@@ -127,6 +127,7 @@ void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
             mouse_button_press(event, window, plyr);
     }
     if (poll_event2(shoot_positions, plyr, window, mob) == 1
-        && colisioin_box_mob(plyr->weapon->colision_b, mob) == 1)
-        aply_change_hit(mob, map, plyr->weapon);
+        && colisioin_box_mob(plyr->weapon->colision_b, mob) == 1) {
+        aply_change_hit(plyr, mob, map, plyr->weapon);
+    }
 }

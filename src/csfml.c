@@ -44,12 +44,15 @@ static void draw_sprite(window_t *window, hero_t *plyr, map_t *map,
 
 static void show_window(window_t *window, hero_t *plyr, sfSprite *back)
 {
+    sfSprite_setPosition(plyr->spXP,
+        (sfVector2f){plyr->posx - 50, plyr->posy - 200});
     sfRenderWindow_setView(window->window, plyr->run);
     sfRenderWindow_drawSprite(window->window, back, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->sprite, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->spHP, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->spStam, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->spMan, NULL);
+    sfRenderWindow_drawSprite(window->window, plyr->spXP, NULL);
     sfRenderWindow_drawSprite(window->window, plyr->weapon->weapon, NULL);
     print_inventaire(window, plyr);
     sfRenderWindow_drawRectangleShape(window->window, plyr->colision, NULL);

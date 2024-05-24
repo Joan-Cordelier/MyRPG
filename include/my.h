@@ -91,6 +91,7 @@ void set_rect_inv(sfRectangleShape *rect, int x, int y);
 //sword_hit.c
 void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change);
 void sword_hit_mob(hero_t *plyr, hero_t *mob, map_t *map, int change);
+void hero_xp(hero_t *hero);
 
 //sword_rotate.c
 void rotate_png(hero_t *plyr, sfVector2i button_positions);
@@ -104,7 +105,7 @@ void init_weapon(hero_t *hero);
 sfRenderWindow *create_window(unsigned int x, unsigned int y,
     unsigned int frame, char *title);
 window_t *init_window(unsigned int x, unsigned int y, int frame, char *title);
-void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon);
+void aply_change_hit(hero_t *plyr, hero_t *mob, map_t *map, weapon_t *weapon);
 void handle_exit_button_click(button_t *button, sfRenderWindow *window);
 void handle_button_events(button_t *button, sfRenderWindow *window);
 void render_buttons(sfRenderWindow *window,
@@ -114,6 +115,7 @@ void handle_events(window_t *window, button_t **buttons, size_t button_count);
 void cleanup(button_t **buttons, size_t button_count);
 button_t **create_menu_buttons(sfFont *font);
 void display_main_menu(window_t *window);
+
 
 
 #endif

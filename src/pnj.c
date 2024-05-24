@@ -130,6 +130,7 @@ hero_t *init_hero(char *file, int x, int y, int status)
     hero->moove = true;
     create_rectange_shape(hero);
     create_stat(hero);
+    hero_xp(hero);
     create_inv(hero);
     init_player(hero);
     init_weapon(hero);

@@ -128,6 +128,12 @@ typedef struct hero_s {
     inventaire_t *inv;
     stat_t *player;
     weapon_t *weapon;
+    sfTexture *texXP;
+    sfSprite *spXP;
+    sfIntRect recXP;
+    sfSound *songXP;
+    sfSoundBuffer *songXP2;
+    int XP;
     float angle;
     int viewx;
     int viewy;

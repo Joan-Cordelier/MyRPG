@@ -7,13 +7,20 @@
 
 #include "my.h"
 
-void aply_change_hit(hero_t *mob, map_t *map, weapon_t *weapon)
+void aply_change_hit(hero_t *plyr, hero_t *mob, map_t *map, weapon_t *weapon)
 {
     mob->player->life = mob->player->life - weapon->damage;
     if (mob->player->life <= 0 && mob->status == PLAYER)
         dead_hero(mob, map);
-    if (mob->player->life <= 0 && mob->status == SQUELETON)
+    if (mob->player->life <= 0 && mob->status == SQUELETON) {
         dead_mob(mob, map);
+        plyr->recXP.width = plyr->recXP.width + 50 / plyr->XP;
+        if (plyr->recXP.width >= 100) {
+            plyr->recXP.width = 0;
+            plyr->XP = plyr->XP + 1;
+        }
+        sfSprite_setTextureRect(plyr->spXP, plyr->recXP);
+    }
     mob->recHP.width = mob->recHP.width - weapon->damage;
     sfSprite_setTextureRect(mob->spHP, mob->recHP);
 }
@@ -26,7 +33,7 @@ void sword_hit(hero_t *plyr, hero_t *mob, map_t *map, int change)
     if (sfMouse_isButtonPressed(sfMouseLeft) && change == 0) {
         if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1
             && clock_espl.microseconds > 500000) {
-            aply_change_hit(mob, map, plyr->weapon);
+            aply_change_hit(plyr, mob, map, plyr->weapon);
             sfClock_restart(plyr->spatt);
         }
         plyr->angle = plyr->angle - 90.0;
@@ -43,7 +50,7 @@ void sword_hit_mob(hero_t *plyr, hero_t *mob, map_t *map, int change)
     clock_espl = sfClock_getElapsedTime(plyr->spatt);
     if (colisioin_box_mob(plyr->weapon->colision_w, mob) == 1
         && clock_espl.microseconds > 1000000) {
-        aply_change_hit(mob, map, plyr->weapon);
+        aply_change_hit(plyr, mob, map, plyr->weapon);
         sfClock_restart(plyr->spatt);
     }
     plyr->angle = plyr->angle - 90.0;
