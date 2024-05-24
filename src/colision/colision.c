@@ -46,7 +46,7 @@ int map_colision_2(sfRectangleShape *exit, hero_t *plyr, map_t *map)
     sfFloatRect rect_exit = sfRectangleShape_getGlobalBounds(exit);
 
     if (sfFloatRect_intersects(&rect_exit, &rect_ply, NULL) == sfTrue) {
-        if (sfMouse_isButtonPressed(sfKeySpace)) {
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
             sfRectangleShape_setOutlineColor(plyr->colision, sfRed);
             sfRectangleShape_setOutlineColor(exit, sfRed);
             return 1;
