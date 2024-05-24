@@ -21,4 +21,5 @@ int colisioin_box_mob(sfRectangleShape *box, hero_t *mob)
         sfRectangleShape_setOutlineColor(mob->colision, sfGreen);
         return 0;
     }
+    return 0;
 }
