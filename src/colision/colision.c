@@ -46,7 +46,7 @@ int map_colision_2(sfRectangleShape *exit, hero_t *plyr, map_t *map)
     sfFloatRect rect_exit = sfRectangleShape_getGlobalBounds(exit);
 
     if (sfFloatRect_intersects(&rect_exit, &rect_ply, NULL) == sfTrue) {
-        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+        if (sfMouse_isButtonPressed(sfKeySpace)) {
             sfRectangleShape_setOutlineColor(plyr->colision, sfRed);
             sfRectangleShape_setOutlineColor(exit, sfRed);
             return 1;
@@ -63,7 +63,6 @@ static void set_new_map_new(window_t *window, hero_t *plyr, map_t *map,
     hero_t *mob)
 {
     set_mob_back_shoot(mob, plyr, map);
-
     sfRenderWindow_drawSprite(window->window, map->pnj->pnj, NULL);
     sfRenderWindow_drawSprite(window->window, map->map, NULL);
 }
