@@ -32,10 +32,13 @@ static void crate_stats_sprites(hero_t *hero)
     hero->spStam = sfSprite_create();
     hero->texMan = sfTexture_createFromFile("sprite/hero_rpg/Mana.png", NULL);
     hero->spMan = sfSprite_create();
+    hero->texIn = sfTexture_createFromFile("sprite/map/inventory.png", NULL);
+    hero->spIn = sfSprite_create();
 }
 
 static void set_sprite_stat(hero_t *hero)
 {
+    sfSprite_setTexture(hero->spIn, hero->texIn, sfTrue);
     sfSprite_setTexture(hero->spHP, hero->texHP, sfTrue);
     sfSprite_setTexture(hero->spStam, hero->texStam, sfTrue);
     sfSprite_setTexture(hero->spMan, hero->texMan, sfTrue);
@@ -67,6 +70,19 @@ static void create_stat(hero_t *hero)
     set_sprite_stat(hero);
 }
 
+static void create_inv(hero_t *hero)
+{
+    hero->Inv = false;
+    hero->recIn.top = 207;
+    hero->recIn.left = 80;
+    hero->recIn.width = 80;
+    hero->recIn.height = 230;
+    sfSprite_setTextureRect(hero->spIn, hero->recIn);
+    sfSprite_setScale(hero->spIn, (sfVector2f){5, 5});
+    sfSprite_setPosition(hero->spIn,
+        (sfVector2f){hero->posx - 40, hero->posy - 10});
+}
+
 static void create_hero(hero_t *hero, char *file, int x, int y)
 {
     hero->texture = sfTexture_createFromFile(file, NULL);
@@ -96,8 +112,10 @@ hero_t *init_hero(char *file, int x, int y, int status)
     hero->anim = sfClock_create();
     hero->spatt = sfClock_create();
     hero->status = status;
+    hero->moove = true;
     create_rectange_shape(hero);
     create_stat(hero);
+    create_inv(hero);
     init_player(hero);
     init_weapon(hero);
     return hero;

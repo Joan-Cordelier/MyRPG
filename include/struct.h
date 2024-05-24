@@ -92,6 +92,8 @@ typedef struct stat_s {
 } stat_t;
 
 typedef struct hero_s {
+    sfTexture *texIn;                                                                                                                                                                                                                                                                                                            
+    sfSprite *spIn;
     sfRectangleShape *colision;
     sfSound *songG;
     sfSoundBuffer *songG2;
@@ -122,7 +124,8 @@ typedef struct hero_s {
     int viewy;
     int posx;
     int posy;
-    bool vie;
+    bool Inv;                                                                                                                                                                                                                                                                                                     
+    bool moove;
     int status;
 } hero_t;
 

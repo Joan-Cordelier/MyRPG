@@ -85,6 +85,16 @@ int poll_event2(sfVector2f shoot_positions, hero_t *plyr, window_t *window,
     return 0;
 }
 
+static void inventory(hero_t *plyr, sfEvent event)
+{
+    if (event.key.code == sfKeyI) {
+        if (plyr->Inv == false)
+            plyr->Inv = true;
+        else
+            plyr->Inv = false;
+    }
+}
+
 void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
 {
     sfEvent event;
@@ -97,6 +107,8 @@ void poll_event(map_t *map, window_t *window, hero_t *plyr, hero_t *mob)
         shoot_positions = sfSprite_getPosition(plyr->weapon->bullet);
     }
     while (sfRenderWindow_pollEvent(window->window, &event)) {
+        if (event.type == sfEvtKeyPressed)
+            inventory(plyr, event);
         if (event.type == sfEvtClosed) {
             sfRenderWindow_close(window->window);
             break;
