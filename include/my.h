@@ -68,6 +68,9 @@ void init_pnj_null(map_t *map);
 void check_status(pnj_t *pnj, hero_t *hero);
 void init_pnj_cave(map_t *map);
 
+//loading.c
+void my_loading(sfRenderWindow *window, hero_t *plyr);
+
 //map_utils.c
 void init_map(map_t *map);
 char **my_str_to_word_array(char *str, char *end);
