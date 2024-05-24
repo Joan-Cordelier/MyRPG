@@ -132,6 +132,7 @@ void my_rpg(window_t *window, hero_t *plyr, hero_t *mob)
 
     map = map_check(map, plyr, mob);
     while (sfRenderWindow_isOpen(window->window)) {
+        level_up(plyr);
         moove_and_set(plyr, map);
         map = map_colision(window, plyr, map, mob);
         draw_sprite(window, plyr, map, mob);

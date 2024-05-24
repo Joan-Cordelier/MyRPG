@@ -1,5 +1,5 @@
 Salutation fantome, 
-ta première mission sera de prendre
+ta premiere mission sera de prendre
 consience de ton environement.
 $
 appuie sur les touches suivante
@@ -10,8 +10,8 @@ S-> reculer
 Q-> gauche
 D-> droite
 $
-Pour attaquer tu dois invoqué
-ton épée avec "clic gauche"
+Pour attaquer tu dois invoque
+ton epee avec "clic gauche"
 tu peux changer darme avec 'E' et 'R'
 $
 Evite les attaques avec A
@@ -19,6 +19,6 @@ Tu pourra te soigner avec ces quelque fiol.
 Bleu pour le mana et rouge pour la vie
 $
 Maintenant, 
-je te demande de m'aidez a récupérer mon visage volé
-par le grand méchant...
-récupere le pour moi !!
+je te demande de m'aidez a recuperer mon visage vole
+par le grand mechant...
+recupere le pour moi !!

@@ -133,6 +133,7 @@ typedef struct hero_s {
     sfIntRect recXP;
     sfSound *songXP;
     sfSoundBuffer *songXP2;
+    sfClock *clockXP;
     int XP;
     float angle;
     int viewx;
